@@ -1,15 +1,25 @@
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
 
 async function eliminarCircuito(formData: FormData) {
   "use server";
+  const supabase = await createClient();
   const id = formData.get("id") as string;
+
+  if (!supabase) return;
+
   await supabase.from("circuitos").delete().eq("id", id);
   revalidatePath("/admin/circuitos");
 }
 
 export default async function AdminCircuitosPage() {
+  const supabase = await createClient();
+
+  if (!supabase) {
+    return <div className="p-6 text-red-600">Error al conectar con la base de datos</div>;
+  }
+
   const { data: circuitos, error } = await supabase
     .from("circuitos")
     .select("*")

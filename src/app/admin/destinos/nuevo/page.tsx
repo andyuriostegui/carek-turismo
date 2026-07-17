@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 
 export default function NuevoDestinoPage() {
@@ -18,9 +18,16 @@ export default function NuevoDestinoPage() {
     activo: true,
   });
 
+  // ✅ Creamos el cliente aquí (esta es la forma correcta)
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
+
     setForm((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,

@@ -1,302 +1,152 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
+import { revalidatePath } from "next/cache";
 
-export default function NuevoTourPage() {
-  const router = useRouter();
-  const [destinos, setDestinos] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [mensaje, setMensaje] = useState("");
+async function eliminarTour(formData: FormData) {
+  "use server";
+  const supabase = await createClient();
+  const id = formData.get("id") as string;
 
-  const [form, setForm] = useState({
-    titulo: "",
-    slug: "",
-    destino_id: "",
-    descripcion_corta: "",
-    descripcion_larga: "",
-    precio_adulto_mxn: "",
-    precio_adulto_usd: "",
-    precio_menor_mxn: "",
-    precio_menor_usd: "",
-    duracion: "",
-    itinerario: "",
-    incluye: "",
-    no_incluye: "",
-    recomendaciones: "",
-    importante: "",
-    activo: true,
-    destacado: false,
-  });
+  if (!supabase) return;
 
-  // ✅ Cliente de Supabase creado correctamente
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  await supabase.from("tours").delete().eq("id", id);
+  revalidatePath("/admin/tours");
+}
 
-  useEffect(() => {
-    const cargarDestinos = async () => {
-      if (!supabase) return;
+export default async function AdminToursPage() {
+  const supabase = await createClient();
 
-      const { data } = await supabase
-        .from("destinos")
-        .select("id, nombre")
-        .order("orden");
-      if (data) setDestinos(data);
-    };
-    cargarDestinos();
-  }, []);
+  if (!supabase) {
+    return <div className="p-6 text-red-600">Error de conexión con la base de datos</div>;
+  }
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { name, value, type } = e.target;
-    const checked = (e.target as HTMLInputElement).checked;
+  const { data: tours, error } = await supabase
+    .from("tours")
+    .select(`
+      id,
+      titulo,
+      slug,
+      duracion,
+      precio_adulto_usd,
+      activo,
+      destacado,
+      destinos ( nombre )
+    `)
+    .order("orden", { ascending: true });
 
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
-
-  const handleTituloChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const titulo = e.target.value;
-    const slug = titulo
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
-
-    setForm((prev) => ({ ...prev, titulo, slug }));
-  };
-
-  const toArray = (text: string) =>
-    text.split("\n").map((item) => item.trim()).filter(Boolean);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setMensaje("");
-
-    const { error } = await supabase.from("tours").insert({
-      titulo: form.titulo,
-      slug: form.slug,
-      destino_id: form.destino_id || null,
-      descripcion_corta: form.descripcion_corta,
-      descripcion_larga: form.descripcion_larga,
-      precio_adulto_mxn: form.precio_adulto_mxn ? Number(form.precio_adulto_mxn) : null,
-      precio_adulto_usd: form.precio_adulto_usd ? Number(form.precio_adulto_usd) : null,
-      precio_menor_mxn: form.precio_menor_mxn ? Number(form.precio_menor_mxn) : null,
-      precio_menor_usd: form.precio_menor_usd ? Number(form.precio_menor_usd) : null,
-      duracion: form.duracion,
-      itinerario: toArray(form.itinerario),
-      incluye: toArray(form.incluye),
-      no_incluye: toArray(form.no_incluye),
-      recomendaciones: toArray(form.recomendaciones),
-      importante: toArray(form.importante),
-      activo: form.activo,
-      destacado: form.destacado,
-    });
-
-    setLoading(false);
-
-    if (error) {
-      setMensaje("Error: " + error.message);
-      return;
-    }
-
-    setMensaje("Tour creado correctamente");
-    setTimeout(() => {
-      router.push("/admin/tours");
-      router.refresh();
-    }, 800);
-  };
+  if (error) {
+    return <div className="p-6 text-red-600">Error: {error.message}</div>;
+  }
 
   return (
-    <div className="p-8 max-w-5xl mx-auto">
+    <div className="p-6">
       {/* Header */}
-      <div className="mb-8">
-        <Link href="/admin/tours" className="text-sm text-blue-600 hover:text-blue-700 font-medium">
-          ← Volver a tours
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Lista de Tours</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            {tours?.length || 0} tours registrados
+          </p>
+        </div>
+
+        <Link
+          href="/admin/tours/nuevo"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition"
+        >
+          + Nuevo tour
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900 mt-2">Nuevo Tour</h1>
-        <p className="text-gray-500 text-sm mt-1">Completa la información del tour</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-8">
-        {/* Información básica */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900 mb-5">Información básica</h2>
+      {/* Tabla */}
+      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-gray-100">
+              <th className="text-left px-6 py-4 font-medium text-gray-500">Nombre</th>
+              <th className="text-left px-6 py-4 font-medium text-gray-500">Destino</th>
+              <th className="text-left px-6 py-4 font-medium text-gray-500">Duración</th>
+              <th className="text-left px-6 py-4 font-medium text-gray-500">Precio</th>
+              <th className="text-left px-6 py-4 font-medium text-gray-500">Estado</th>
+              <th className="text-right px-6 py-4 font-medium text-gray-500">Acciones</th>
+            </tr>
+          </thead>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Título del tour *</label>
-              <input
-                type="text"
-                name="titulo"
-                value={form.titulo}
-                onChange={handleTituloChange}
-                required
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
-                placeholder="Ej: Tour Bacalar y Cenote"
-              />
-            </div>
+          <tbody>
+            {tours?.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="px-6 py-10 text-center text-gray-500">
+                  No hay tours registrados todavía.
+                </td>
+              </tr>
+            ) : (
+              tours?.map((tour: any) => (
+                <tr
+                  key={tour.id}
+                  className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition"
+                >
+                  <td className="px-6 py-4">
+                    <div className="font-medium text-gray-900">{tour.titulo}</div>
+                    {tour.destacado && (
+                      <span className="text-xs text-emerald-600 font-medium">Destacado</span>
+                    )}
+                  </td>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Slug *</label>
-              <input
-                type="text"
-                name="slug"
-                value={form.slug}
-                onChange={handleChange}
-                required
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 bg-gray-50 outline-none"
-              />
-            </div>
+                  <td className="px-6 py-4 text-gray-600">
+                    {tour.destinos?.nombre || "—"}
+                  </td>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Destino</label>
-              <select
-                name="destino_id"
-                value={form.destino_id}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none"
-              >
-                <option value="">Selecciona un destino</option>
-                {destinos.map((d) => (
-                  <option key={d.id} value={d.id}>{d.nombre}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
+                  <td className="px-6 py-4 text-gray-600">
+                    {tour.duracion || "—"}
+                  </td>
 
-        {/* Descripciones */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900 mb-5">Descripciones</h2>
-          <div className="space-y-5">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Descripción corta</label>
-              <textarea
-                name="descripcion_corta"
-                value={form.descripcion_corta}
-                onChange={handleChange}
-                rows={2}
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none resize-none"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">Descripción larga</label>
-              <textarea
-                name="descripcion_larga"
-                value={form.descripcion_larga}
-                onChange={handleChange}
-                rows={5}
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none resize-none"
-              />
-            </div>
-          </div>
-        </div>
+                  <td className="px-6 py-4 text-gray-600">
+                    {tour.precio_adulto_usd ? `USD ${tour.precio_adulto_usd}` : "—"}
+                  </td>
 
-        {/* Precios y duración */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900 mb-5">Precios y duración</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-5">
-            {[
-              { name: "precio_adulto_mxn", label: "Adulto MXN" },
-              { name: "precio_adulto_usd", label: "Adulto USD" },
-              { name: "precio_menor_mxn", label: "Menor MXN" },
-              { name: "precio_menor_usd", label: "Menor USD" },
-            ].map((field) => (
-              <div key={field.name}>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">{field.label}</label>
-                <input
-                  type="number"
-                  name={field.name}
-                  value={(form as any)[field.name]}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none"
-                />
-              </div>
-            ))}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Duración</label>
-            <input
-              type="text"
-              name="duracion"
-              value={form.duracion}
-              onChange={handleChange}
-              placeholder="Ej: 7-9 horas"
-              className="w-full md:w-1/2 border border-gray-300 rounded-xl px-4 py-2.5 outline-none"
-            />
-          </div>
-        </div>
+                  <td className="px-6 py-4">
+                    <span
+                      className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                        tour.activo
+                          ? "bg-emerald-50 text-emerald-700"
+                          : "bg-gray-100 text-gray-600"
+                      }`}
+                    >
+                      {tour.activo ? "Activo" : "Inactivo"}
+                    </span>
+                  </td>
 
-        {/* Detalles */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900 mb-5">Detalles del tour</h2>
-          {[
-            { name: "itinerario", label: "Itinerario" },
-            { name: "incluye", label: "Incluye" },
-            { name: "no_incluye", label: "No incluye" },
-            { name: "recomendaciones", label: "Recomendaciones" },
-            { name: "importante", label: "Importante" },
-          ].map((field) => (
-            <div key={field.name} className="mb-5">
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                {field.label} <span className="text-gray-400">(uno por línea)</span>
-              </label>
-              <textarea
-                name={field.name}
-                value={(form as any)[field.name]}
-                onChange={handleChange}
-                rows={4}
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 font-mono text-sm outline-none resize-none"
-              />
-            </div>
-          ))}
-        </div>
+                  <td className="px-6 py-4">
+                    <div className="flex justify-end gap-2">
+                      <Link
+                        href={`/admin/tours/${tour.id}/edit`}
+                        className="px-3.5 py-1.5 text-sm font-medium text-blue-700 
+                                   bg-blue-50 hover:bg-blue-100 
+                                   border border-blue-100 
+                                   rounded-lg transition"
+                      >
+                        Editar
+                      </Link>
 
-        {/* Estado */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Estado</h2>
-          <div className="flex gap-8">
-            <label className="flex items-center gap-2.5 cursor-pointer">
-              <input type="checkbox" name="activo" checked={form.activo} onChange={handleChange} className="w-4 h-4 rounded" />
-              <span className="text-sm font-medium">Activo</span>
-            </label>
-            <label className="flex items-center gap-2.5 cursor-pointer">
-              <input type="checkbox" name="destacado" checked={form.destacado} onChange={handleChange} className="w-4 h-4 rounded" />
-              <span className="text-sm font-medium">Destacado</span>
-            </label>
-          </div>
-        </div>
-
-        {/* Botones */}
-        <div className="flex items-center gap-3 pt-2">
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-medium transition disabled:opacity-50"
-          >
-            {loading ? "Guardando..." : "Crear Tour"}
-          </button>
-          <Link href="/admin/tours" className="px-8 py-3 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium transition">
-            Cancelar
-          </Link>
-        </div>
-
-        {mensaje && (
-          <p className={`text-sm font-medium ${mensaje.includes("Error") ? "text-red-600" : "text-green-600"}`}>
-            {mensaje}
-          </p>
-        )}
-      </form>
+                      <form action={eliminarTour}>
+                        <input type="hidden" name="id" value={tour.id} />
+                        <button
+                          type="submit"
+                          className="px-3.5 py-1.5 text-sm font-medium text-red-700 
+                                     bg-red-50 hover:bg-red-100 
+                                     border border-red-100 
+                                     rounded-lg transition"
+                        >
+                          Eliminar
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

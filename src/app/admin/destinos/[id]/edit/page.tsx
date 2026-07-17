@@ -35,7 +35,6 @@ export default function EditarTourPage() {
     destacado: false,
   });
 
-  // ✅ Cliente de Supabase creado correctamente
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -43,6 +42,7 @@ export default function EditarTourPage() {
 
   useEffect(() => {
     const cargarDatos = async () => {
+      // Cargar destinos para el select
       const { data: destinosData } = await supabase
         .from("destinos")
         .select("id, nombre")
@@ -50,6 +50,7 @@ export default function EditarTourPage() {
 
       if (destinosData) setDestinos(destinosData);
 
+      // Cargar el tour
       const { data: tour, error } = await supabase
         .from("tours")
         .select("*")
@@ -91,6 +92,7 @@ export default function EditarTourPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
+
     setForm((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -145,69 +147,164 @@ export default function EditarTourPage() {
   }
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
+    <div className="p-8 max-w-5xl mx-auto">
       <div className="mb-8">
-        <Link href="/admin/destinos" className="text-sm text-blue-600 hover:text-blue-700 font-medium">
-          ← Volver a destinos
+        <Link href="/admin/tours" className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+          ← Volver a tours
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900 mt-2">Editar Destino</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mt-2">Editar Tour</h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Nombre *</label>
-            <input
-              type="text"
-              name="nombre"
-              value={form.nombre}
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+      <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Información básica */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <h2 className="text-lg font-semibold mb-5">Información básica</h2>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Slug *</label>
-            <input
-              type="text"
-              name="slug"
-              value={form.slug}
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 bg-gray-50 outline-none"
-            />
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Título *</label>
+              <input
+                type="text"
+                name="titulo"
+                value={form.titulo}
+                onChange={handleChange}
+                required
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Descripción</label>
-            <textarea
-              name="descripcion"
-              value={form.descripcion}
-              onChange={handleChange}
-              rows={3}
-              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none resize-none"
-            />
-          </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Slug *</label>
+              <input
+                type="text"
+                name="slug"
+                value={form.slug}
+                onChange={handleChange}
+                required
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 bg-gray-50 outline-none"
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Orden</label>
-            <input
-              type="number"
-              name="orden"
-              value={form.orden}
-              onChange={handleChange}
-              className="w-32 border border-gray-300 rounded-xl px-4 py-2.5 outline-none"
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Destino</label>
+              <select
+                name="destino_id"
+                value={form.destino_id}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none"
+              >
+                <option value="">Selecciona un destino</option>
+                {destinos.map((d) => (
+                  <option key={d.id} value={d.id}>{d.nombre}</option>
+                ))}
+              </select>
+            </div>
           </div>
-
-          <label className="flex items-center gap-2.5 cursor-pointer">
-            <input type="checkbox" name="activo" checked={form.activo} onChange={handleChange} className="w-4 h-4 rounded" />
-            <span className="text-sm font-medium">Activo</span>
-          </label>
         </div>
 
-        <div className="flex gap-3">
+        {/* Descripciones */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <h2 className="text-lg font-semibold mb-5">Descripciones</h2>
+          <div className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Descripción corta</label>
+              <textarea
+                name="descripcion_corta"
+                value={form.descripcion_corta}
+                onChange={handleChange}
+                rows={2}
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none resize-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Descripción larga</label>
+              <textarea
+                name="descripcion_larga"
+                value={form.descripcion_larga}
+                onChange={handleChange}
+                rows={5}
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none resize-none"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Precios y duración */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <h2 className="text-lg font-semibold mb-5">Precios y duración</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-5">
+            {[
+              { name: "precio_adulto_mxn", label: "Adulto MXN" },
+              { name: "precio_adulto_usd", label: "Adulto USD" },
+              { name: "precio_menor_mxn", label: "Menor MXN" },
+              { name: "precio_menor_usd", label: "Menor USD" },
+            ].map((field) => (
+              <div key={field.name}>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">{field.label}</label>
+                <input
+                  type="number"
+                  name={field.name}
+                  value={(form as any)[field.name]}
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none"
+                />
+              </div>
+            ))}
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Duración</label>
+            <input
+              type="text"
+              name="duracion"
+              value={form.duracion}
+              onChange={handleChange}
+              className="w-full md:w-1/2 border border-gray-300 rounded-xl px-4 py-2.5 outline-none"
+            />
+          </div>
+        </div>
+
+        {/* Detalles */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <h2 className="text-lg font-semibold mb-5">Detalles del tour</h2>
+          {[
+            { name: "itinerario", label: "Itinerario" },
+            { name: "incluye", label: "Incluye" },
+            { name: "no_incluye", label: "No incluye" },
+            { name: "recomendaciones", label: "Recomendaciones" },
+            { name: "importante", label: "Importante" },
+          ].map((field) => (
+            <div key={field.name} className="mb-5">
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                {field.label} <span className="text-gray-400">(uno por línea)</span>
+              </label>
+              <textarea
+                name={field.name}
+                value={(form as any)[field.name]}
+                onChange={handleChange}
+                rows={4}
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 font-mono text-sm outline-none resize-none"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Estado */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <h2 className="text-lg font-semibold mb-4">Estado</h2>
+          <div className="flex gap-8">
+            <label className="flex items-center gap-2.5 cursor-pointer">
+              <input type="checkbox" name="activo" checked={form.activo} onChange={handleChange} className="w-4 h-4 rounded" />
+              <span className="text-sm font-medium">Activo</span>
+            </label>
+            <label className="flex items-center gap-2.5 cursor-pointer">
+              <input type="checkbox" name="destacado" checked={form.destacado} onChange={handleChange} className="w-4 h-4 rounded" />
+              <span className="text-sm font-medium">Destacado</span>
+            </label>
+          </div>
+        </div>
+
+        {/* Botones */}
+        <div className="flex items-center gap-3">
           <button
             type="submit"
             disabled={saving}
@@ -215,7 +312,7 @@ export default function EditarTourPage() {
           >
             {saving ? "Guardando..." : "Guardar cambios"}
           </button>
-          <Link href="/admin/destinos" className="px-8 py-3 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium transition">
+          <Link href="/admin/tours" className="px-8 py-3 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium transition">
             Cancelar
           </Link>
         </div>

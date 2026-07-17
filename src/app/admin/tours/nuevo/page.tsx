@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 
 export default function NuevoTourPage() {
@@ -31,8 +31,16 @@ export default function NuevoTourPage() {
     destacado: false,
   });
 
+  // ✅ Cliente de Supabase creado correctamente
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
   useEffect(() => {
     const cargarDestinos = async () => {
+      if (!supabase) return;
+
       const { data } = await supabase
         .from("destinos")
         .select("id, nombre")
@@ -67,10 +75,7 @@ export default function NuevoTourPage() {
   };
 
   const toArray = (text: string) =>
-    text
-      .split("\n")
-      .map((item) => item.trim())
-      .filter(Boolean);
+    text.split("\n").map((item) => item.trim()).filter(Boolean);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,116 +120,91 @@ export default function NuevoTourPage() {
     <div className="p-8 max-w-5xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <Link
-          href="/admin/tours"
-          className="text-sm text-blue-600 hover:text-blue-700 font-medium"
-        >
+        <Link href="/admin/tours" className="text-sm text-blue-600 hover:text-blue-700 font-medium">
           ← Volver a tours
         </Link>
         <h1 className="text-2xl font-bold text-gray-900 mt-2">Nuevo Tour</h1>
-        <p className="text-gray-500 text-sm mt-1">
-          Completa la información del tour
-        </p>
+        <p className="text-gray-500 text-sm mt-1">Completa la información del tour</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">
-        {/* Sección: Información básica */}
+        {/* Información básica */}
         <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900 mb-5">
-            Información básica
-          </h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-5">Información básica</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Título del tour *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Título del tour *</label>
               <input
                 type="text"
                 name="titulo"
                 value={form.titulo}
                 onChange={handleTituloChange}
                 required
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
                 placeholder="Ej: Tour Bacalar y Cenote"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Slug *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Slug *</label>
               <input
                 type="text"
                 name="slug"
                 value={form.slug}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 bg-gray-50 outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Destino
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Destino</label>
               <select
                 name="destino_id"
                 value={form.destino_id}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none"
               >
                 <option value="">Selecciona un destino</option>
                 {destinos.map((d) => (
-                  <option key={d.id} value={d.id}>
-                    {d.nombre}
-                  </option>
+                  <option key={d.id} value={d.id}>{d.nombre}</option>
                 ))}
               </select>
             </div>
           </div>
         </div>
 
-        {/* Sección: Descripciones */}
+        {/* Descripciones */}
         <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-gray-900 mb-5">Descripciones</h2>
-
           <div className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Descripción corta
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Descripción corta</label>
               <textarea
                 name="descripcion_corta"
                 value={form.descripcion_corta}
                 onChange={handleChange}
                 rows={2}
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-                placeholder="Resumen atractivo del tour"
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none resize-none"
               />
             </div>
-
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Descripción larga
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Descripción larga</label>
               <textarea
                 name="descripcion_larga"
                 value={form.descripcion_larga}
                 onChange={handleChange}
                 rows={5}
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none resize-none"
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none resize-none"
               />
             </div>
           </div>
         </div>
 
-        {/* Sección: Precios y duración */}
+        {/* Precios y duración */}
         <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900 mb-5">
-            Precios y duración
-          </h2>
-
+          <h2 className="text-lg font-semibold text-gray-900 mb-5">Precios y duración</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-5">
             {[
               { name: "precio_adulto_mxn", label: "Adulto MXN" },
@@ -233,67 +213,53 @@ export default function NuevoTourPage() {
               { name: "precio_menor_usd", label: "Menor USD" },
             ].map((field) => (
               <div key={field.name}>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                  {field.label}
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">{field.label}</label>
                 <input
                   type="number"
                   name={field.name}
                   value={(form as any)[field.name]}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none"
                 />
               </div>
             ))}
           </div>
-
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Duración
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Duración</label>
             <input
               type="text"
               name="duracion"
               value={form.duracion}
               onChange={handleChange}
               placeholder="Ej: 7-9 horas"
-              className="w-full md:w-1/2 border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full md:w-1/2 border border-gray-300 rounded-xl px-4 py-2.5 outline-none"
             />
           </div>
         </div>
 
-        {/* Sección: Detalles del tour */}
+        {/* Detalles */}
         <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900 mb-5">
-            Detalles del tour
-          </h2>
-
-          <div className="space-y-5">
-            {[
-              { name: "itinerario", label: "Itinerario" },
-              { name: "incluye", label: "Incluye" },
-              { name: "no_incluye", label: "No incluye" },
-              { name: "recomendaciones", label: "Recomendaciones" },
-              { name: "importante", label: "Importante" },
-            ].map((field) => (
-              <div key={field.name}>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                  {field.label}{" "}
-                  <span className="text-gray-400 font-normal">
-                    (uno por línea)
-                  </span>
-                </label>
-                <textarea
-                  name={field.name}
-                  value={(form as any)[field.name]}
-                  onChange={handleChange}
-                  rows={4}
-                  className="w-full border border-gray-300 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none font-mono text-sm resize-none"
-                  placeholder="Escribe cada punto en una línea nueva"
-                />
-              </div>
-            ))}
-          </div>
+          <h2 className="text-lg font-semibold text-gray-900 mb-5">Detalles del tour</h2>
+          {[
+            { name: "itinerario", label: "Itinerario" },
+            { name: "incluye", label: "Incluye" },
+            { name: "no_incluye", label: "No incluye" },
+            { name: "recomendaciones", label: "Recomendaciones" },
+            { name: "importante", label: "Importante" },
+          ].map((field) => (
+            <div key={field.name} className="mb-5">
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                {field.label} <span className="text-gray-400">(uno por línea)</span>
+              </label>
+              <textarea
+                name={field.name}
+                value={(form as any)[field.name]}
+                onChange={handleChange}
+                rows={4}
+                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 font-mono text-sm outline-none resize-none"
+              />
+            </div>
+          ))}
         </div>
 
         {/* Estado */}
@@ -301,24 +267,12 @@ export default function NuevoTourPage() {
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Estado</h2>
           <div className="flex gap-8">
             <label className="flex items-center gap-2.5 cursor-pointer">
-              <input
-                type="checkbox"
-                name="activo"
-                checked={form.activo}
-                onChange={handleChange}
-                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-              />
-              <span className="text-sm font-medium text-gray-700">Activo</span>
+              <input type="checkbox" name="activo" checked={form.activo} onChange={handleChange} className="w-4 h-4 rounded" />
+              <span className="text-sm font-medium">Activo</span>
             </label>
             <label className="flex items-center gap-2.5 cursor-pointer">
-              <input
-                type="checkbox"
-                name="destacado"
-                checked={form.destacado}
-                onChange={handleChange}
-                className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-              />
-              <span className="text-sm font-medium text-gray-700">Destacado</span>
+              <input type="checkbox" name="destacado" checked={form.destacado} onChange={handleChange} className="w-4 h-4 rounded" />
+              <span className="text-sm font-medium">Destacado</span>
             </label>
           </div>
         </div>
@@ -332,20 +286,13 @@ export default function NuevoTourPage() {
           >
             {loading ? "Guardando..." : "Crear Tour"}
           </button>
-          <Link
-            href="/admin/tours"
-            className="px-8 py-3 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium transition"
-          >
+          <Link href="/admin/tours" className="px-8 py-3 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium transition">
             Cancelar
           </Link>
         </div>
 
         {mensaje && (
-          <p
-            className={`text-sm font-medium ${
-              mensaje.includes("Error") ? "text-red-600" : "text-green-600"
-            }`}
-          >
+          <p className={`text-sm font-medium ${mensaje.includes("Error") ? "text-red-600" : "text-green-600"}`}>
             {mensaje}
           </p>
         )}

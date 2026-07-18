@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -8,6 +8,11 @@ export default async function TourDetallePage({
   params: Promise<{ destino: string; slug: string }>;
 }) {
   const { destino, slug } = await params;
+  const supabase = await createClient();
+
+  if (!supabase) {
+    notFound();
+  }
 
   const { data: tour, error } = await supabase
     .from("tours")

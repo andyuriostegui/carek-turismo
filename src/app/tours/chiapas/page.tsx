@@ -1,7 +1,17 @@
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
 export default async function ChiapasPage() {
+  const supabase = await createClient();
+
+  if (!supabase) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-red-600">Error de conexión</p>
+      </div>
+    );
+  }
+
   const { data: destino } = await supabase
     .from("destinos")
     .select("*")

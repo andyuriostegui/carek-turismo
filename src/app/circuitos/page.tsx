@@ -1,7 +1,17 @@
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
 export default async function CircuitosPage() {
+  const supabase = await createClient();
+
+  if (!supabase) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-red-600">Error de conexión</p>
+      </div>
+    );
+  }
+
   const { data: circuitos } = await supabase
     .from("circuitos")
     .select("*")
@@ -12,18 +22,14 @@ export default async function CircuitosPage() {
     <div className="min-h-screen bg-white">
       {/* ========== HERO CON IMAGEN ========== */}
       <section className="relative h-[60vh] min-h-[420px] flex items-center justify-center overflow-hidden">
-        {/* Imagen de fondo (viaje / paisaje) */}
         <img
           src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80"
           alt="Paisaje de viaje"
           className="absolute inset-0 w-full h-full object-cover"
         />
-
-        {/* Overlay oscuro */}
         <div className="absolute inset-0 bg-black/55" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60" />
 
-        {/* Contenido */}
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
             Circuitos y Paquetes
@@ -44,7 +50,7 @@ export default async function CircuitosPage() {
                 href={`/circuitos/${item.slug}`}
                 className="group block rounded-3xl overflow-hidden border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300"
               >
-                {/* Imagen de la tarjeta */}
+                {/* Imagen */}
                 <div className="relative h-56 w-full overflow-hidden">
                   <img
                     src={getCircuitoImage(item.slug)}
@@ -54,7 +60,7 @@ export default async function CircuitosPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                 </div>
 
-                {/* Contenido de la tarjeta */}
+                {/* Contenido */}
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-3">
                     <h2 className="text-2xl font-semibold text-gray-900 tracking-tight">
@@ -102,7 +108,7 @@ export default async function CircuitosPage() {
 // Función auxiliar para imágenes
 function getCircuitoImage(slug: string) {
   const images: Record<string, string> = {
-    // Puedes agregar más slugs aquí
+    // Puedes agregar más slugs aquí si quieres
   };
   return images[slug] || "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80";
 }

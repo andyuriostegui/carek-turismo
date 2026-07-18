@@ -33,7 +33,7 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Video de fondo */}
+      {/* ========== VIDEO DE FONDO ========== */}
       <video
         autoPlay
         muted
@@ -43,14 +43,15 @@ export default function Hero() {
         className="absolute inset-0 h-full w-full object-cover object-center"
         aria-hidden="true"
       >
-        <source src="/tour.mp4" type="video/mp4" />
+        <source src="/intro.mp4" type="video/mp4" />
       </video>
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/55" />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-transparent to-slate-950/70" />
+      {/* ========== OVERLAY OSCURO ========== */}
+      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/70" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
 
-      {/* Contenido animado */}
+      {/* ========== CONTENIDO ========== */}
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 pt-24 pb-16 text-center">
         
         {/* Badge */}

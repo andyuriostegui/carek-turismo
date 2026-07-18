@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu } from "lucide-react";
 import AdminSidebar from "@/components/admin/AdminSidebar";
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/client";
 
 const titles: Record<string, string> = {
   "/admin": "Dashboard",
@@ -36,32 +36,38 @@ export default function AdminShell({
   const [loading, setLoading] = useState(true);
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-
   const isLogin = pathname === "/admin/login";
 
   useEffect(() => {
     const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      try {
+        const supabase = createClient();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
-      if (!session && !isLogin) {
-        router.replace("/admin/login");
-        return;
+        if (!session && !isLogin) {
+          router.replace("/admin/login");
+          return;
+        }
+
+        if (session && isLogin) {
+          router.replace("/admin");
+          return;
+        }
+
+        if (session?.user?.email) {
+          setUserEmail(session.user.email);
+        }
+
+        setLoading(false);
+      } catch {
+        if (!isLogin) {
+          router.replace("/admin/login");
+          return;
+        }
+        setLoading(false);
       }
-
-      if (session && isLogin) {
-        router.replace("/admin");
-        return;
-      }
-
-      if (session?.user?.email) {
-        setUserEmail(session.user.email);
-      }
-
-      setLoading(false);
     };
 
     checkUser();

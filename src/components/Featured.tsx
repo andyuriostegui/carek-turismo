@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
 import { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/client";
 
 const categories = [
   { 
@@ -70,21 +70,21 @@ const cardVariants: Variants = {
 export default function Featured() {
   const [destinos, setDestinos] = useState<any[]>([]);
 
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-
   useEffect(() => {
     const fetchDestinos = async () => {
-      const { data, error } = await supabase
-        .from("destinos")
-        .select("*")
-        .eq("activo", true)
-        .order("orden", { ascending: true })
-        .limit(6);
+      try {
+        const supabase = createClient();
+        const { data, error } = await supabase
+          .from("destinos")
+          .select("*")
+          .eq("activo", true)
+          .order("orden", { ascending: true })
+          .limit(6);
 
-      if (!error && data) setDestinos(data);
+        if (!error && data) setDestinos(data);
+      } catch {
+        // Sin env vars de Supabase (p. ej. build sin configurar) se muestran categorías estáticas.
+      }
     };
     fetchDestinos();
   }, []);

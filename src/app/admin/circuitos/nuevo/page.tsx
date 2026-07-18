@@ -2,13 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 export default function NuevoCircuitoPage() {
   const router = useRouter();
@@ -64,6 +59,7 @@ export default function NuevoCircuitoPage() {
     setLoading(true);
     setMensaje("");
 
+    const supabase = createClient();
     const { error } = await supabase.from("circuitos").insert({
       titulo: form.titulo,
       slug: form.slug,

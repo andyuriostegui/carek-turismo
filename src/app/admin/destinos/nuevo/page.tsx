@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 
 export default function NuevoDestinoPage() {
@@ -17,10 +17,6 @@ export default function NuevoDestinoPage() {
     orden: "0",
     activo: true,
   });
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -49,6 +45,7 @@ const supabase = createClient(
     setLoading(true);
     setMensaje("");
 
+    const supabase = createClient();
     const { error } = await supabase.from("destinos").insert({
       nombre: form.nombre,
       slug: form.slug,

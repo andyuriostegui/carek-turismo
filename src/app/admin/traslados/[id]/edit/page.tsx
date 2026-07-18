@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 
 export default function EditarTrasladoPage() {
@@ -23,19 +23,9 @@ export default function EditarTrasladoPage() {
     activo: true,
   });
 
-  // ✅ Cliente de Supabase creado correctamente
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-
   useEffect(() => {
     const cargar = async () => {
-      if (!supabase) {
-        setMensaje("Error de conexión");
-        setLoading(false);
-        return;
-      }
+      const supabase = createClient();
 
       const { data, error } = await supabase
         .from("traslados")
@@ -76,6 +66,7 @@ export default function EditarTrasladoPage() {
     setSaving(true);
     setMensaje("");
 
+    const supabase = createClient();
     const { error } = await supabase.from("traslados").update({
       zona: form.zona,
       titulo: form.titulo,

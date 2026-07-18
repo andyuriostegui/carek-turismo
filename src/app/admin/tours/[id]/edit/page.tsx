@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 
 export default function EditarTourPage() {
@@ -35,19 +35,9 @@ export default function EditarTourPage() {
     destacado: false,
   });
 
-  // ✅ Cliente de Supabase creado correctamente
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-
   useEffect(() => {
     const cargarDatos = async () => {
-      if (!supabase) {
-        setMensaje("Error de conexión");
-        setLoading(false);
-        return;
-      }
+      const supabase = createClient();
 
       // Cargar destinos
       const { data: destinosData } = await supabase
@@ -116,6 +106,7 @@ export default function EditarTourPage() {
     setSaving(true);
     setMensaje("");
 
+    const supabase = createClient();
     const { error } = await supabase.from("tours").update({
       titulo: form.titulo,
       slug: form.slug,

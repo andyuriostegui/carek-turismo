@@ -1,15 +1,25 @@
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
 
 async function eliminarTraslado(formData: FormData) {
   "use server";
+  const supabase = await createClient();
   const id = formData.get("id") as string;
+
+  if (!supabase) return;
+
   await supabase.from("traslados").delete().eq("id", id);
   revalidatePath("/admin/traslados");
 }
 
 export default async function AdminTrasladosPage() {
+  const supabase = await createClient();
+
+  if (!supabase) {
+    return <div className="p-6 text-red-600">Error de conexión con la base de datos</div>;
+  }
+
   const { data: traslados, error } = await supabase
     .from("traslados")
     .select("*")
@@ -48,6 +58,7 @@ export default async function AdminTrasladosPage() {
               <th className="text-right px-6 py-4 font-medium text-gray-500">Acciones</th>
             </tr>
           </thead>
+
           <tbody>
             {traslados?.length === 0 ? (
               <tr>

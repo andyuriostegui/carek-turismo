@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 
 export default function EditarTrasladoPage() {
@@ -23,8 +23,20 @@ export default function EditarTrasladoPage() {
     activo: true,
   });
 
+  // ✅ Cliente de Supabase creado correctamente
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
   useEffect(() => {
     const cargar = async () => {
+      if (!supabase) {
+        setMensaje("Error de conexión");
+        setLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase
         .from("traslados")
         .select("*")
@@ -64,18 +76,15 @@ export default function EditarTrasladoPage() {
     setSaving(true);
     setMensaje("");
 
-    const { error } = await supabase
-      .from("traslados")
-      .update({
-        zona: form.zona,
-        titulo: form.titulo,
-        descripcion: form.descripcion,
-        precio_desde_mxn: form.precio_desde_mxn ? Number(form.precio_desde_mxn) : null,
-        precio_desde_usd: form.precio_desde_usd ? Number(form.precio_desde_usd) : null,
-        activo: form.activo,
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", id);
+    const { error } = await supabase.from("traslados").update({
+      zona: form.zona,
+      titulo: form.titulo,
+      descripcion: form.descripcion,
+      precio_desde_mxn: form.precio_desde_mxn ? Number(form.precio_desde_mxn) : null,
+      precio_desde_usd: form.precio_desde_usd ? Number(form.precio_desde_usd) : null,
+      activo: form.activo,
+      updated_at: new Date().toISOString(),
+    }).eq("id", id);
 
     setSaving(false);
 

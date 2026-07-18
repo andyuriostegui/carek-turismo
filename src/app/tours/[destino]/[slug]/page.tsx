@@ -1,96 +1,236 @@
-import { createClient } from "@/lib/supabase/server";
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import {
+  AlertTriangle,
+  Check,
+  Clock,
+  MapPin,
+  MessageCircle,
+  XCircle,
+} from "lucide-react";
+import { createClient } from "@/lib/supabase/server";
+import {
+  getArrayField,
+  getPriceLines,
+  getTourImage,
+  whatsappTourUrl,
+  type Tour,
+} from "@/lib/tours";
 
-export default async function TourDetallePage({
-  params,
-}: {
+type PageProps = {
   params: Promise<{ destino: string; slug: string }>;
-}) {
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from("tours")
+      .select("titulo, descripcion_corta")
+      .eq("slug", slug)
+      .eq("activo", true)
+      .maybeSingle();
+
+    if (data) {
+      return {
+        title: `${data.titulo} | CAREK Turismo`,
+        description: data.descripcion_corta || undefined,
+      };
+    }
+  } catch {
+    // fallback
+  }
+  return { title: "Tour | CAREK Turismo" };
+}
+
+export default async function TourDetallePage({ params }: PageProps) {
   const { destino, slug } = await params;
-  const supabase = await createClient();
 
-  if (!supabase) {
-    notFound();
-  }
+  let tour: Tour | null = null;
 
-  const { data: tour, error } = await supabase
-    .from("tours")
-    .select(`
-      *,
-      destinos (
-        nombre,
-        slug
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("tours")
+      .select(
+        `
+        *,
+        destinos (
+          nombre,
+          slug
+        )
+      `,
       )
-    `)
-    .eq("slug", slug)
-    .eq("activo", true)
-    .single();
+      .eq("slug", slug)
+      .eq("activo", true)
+      .maybeSingle();
 
-  if (error || !tour) {
+    if (error || !data) notFound();
+    tour = data as Tour;
+  } catch {
     notFound();
   }
+
+  if (!tour) notFound();
+
+  const image = getTourImage(tour, destino);
+  const incluye = getArrayField(tour.incluye);
+  const noIncluye = getArrayField(tour.no_incluye);
+  const itinerario = getArrayField(tour.itinerario);
+  const recomendaciones = getArrayField(tour.recomendaciones);
+  const importante = getArrayField(tour.importante);
+  const priceLines = getPriceLines(tour);
+  const destinoNombre = tour.destinos?.nombre || destino;
+  const wa = whatsappTourUrl(tour.titulo, destinoNombre);
+  const descripcion =
+    tour.descripcion_larga?.trim() ||
+    tour.descripcion_corta?.trim() ||
+    null;
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero */}
-      <section className="bg-slate-900 text-white py-14 px-6">
-        <div className="max-w-4xl mx-auto">
-          <Link
-            href={`/tours/${destino}`}
-            className="text-sm text-slate-300 hover:text-white mb-4 inline-block"
-          >
-            ← Volver a {tour.destinos?.nombre || destino}
-          </Link>
-          <h1 className="text-3xl md:text-5xl font-bold mb-3">{tour.titulo}</h1>
-          {tour.duracion && (
-            <p className="text-slate-300">{tour.duracion}</p>
-          )}
+    <main className="min-h-screen bg-white">
+      <section className="relative h-[50vh] min-h-[360px] overflow-hidden sm:h-[55vh]">
+        <Image
+          src={image}
+          alt={tour.titulo}
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+          unoptimized={image.startsWith("http")}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-slate-950/20" />
+
+        <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10">
+          <div className="mx-auto max-w-4xl">
+            <Link
+              href={`/tours/${destino}`}
+              className="mb-4 inline-block text-sm font-medium text-white/70 transition hover:text-white"
+            >
+              ← Volver a {destinoNombre}
+            </Link>
+            <div className="mb-3 flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900">
+                <MapPin size={13} className="text-teal-700" />
+                {destinoNombre}
+              </span>
+              {tour.duracion && (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-600 px-3 py-1.5 text-xs font-semibold text-white">
+                  <Clock size={13} />
+                  {tour.duracion}
+                </span>
+              )}
+            </div>
+            <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+              {tour.titulo}
+            </h1>
+            {tour.precio_adulto_usd != null && (
+              <p className="mt-3 text-lg font-semibold text-teal-200">
+                Desde ${tour.precio_adulto_usd} USD
+                {tour.precio_adulto_mxn != null && (
+                  <span className="ml-2 text-sm font-medium text-white/60">
+                    ≈ ${tour.precio_adulto_mxn} MXN
+                  </span>
+                )}
+              </p>
+            )}
+          </div>
         </div>
       </section>
 
-      <section className="max-w-4xl mx-auto px-6 py-10">
-        {/* Precio */}
-        <div className="flex flex-wrap items-end gap-6 mb-8 p-5 bg-teal-50 rounded-2xl">
-          {tour.precio_adulto_usd && (
-            <div>
-              <p className="text-sm text-gray-500">Adulto</p>
-              <p className="text-2xl font-bold text-teal-700">
-                ${tour.precio_adulto_usd} USD
-              </p>
-              {tour.precio_adulto_mxn && (
-                <p className="text-sm text-gray-500">${tour.precio_adulto_mxn} MXN</p>
-              )}
-            </div>
-          )}
-          {tour.precio_menor_usd && (
-            <div>
-              <p className="text-sm text-gray-500">Menor</p>
-              <p className="text-xl font-bold text-teal-700">
-                ${tour.precio_menor_usd} USD
-              </p>
-            </div>
-          )}
-        </div>
+      <section className="mx-auto max-w-4xl space-y-8 px-6 py-10 sm:py-14">
+        {descripcion && (
+          <p className="whitespace-pre-line text-base leading-relaxed text-slate-600 sm:text-lg">
+            {descripcion}
+          </p>
+        )}
 
-        {/* Descripción */}
-        {tour.descripcion_larga && (
-          <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-3">Descripción</h2>
-            <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-              {tour.descripcion_larga}
-            </p>
+        {priceLines.length > 0 && (
+          <div className="rounded-2xl border border-teal-100 bg-gradient-to-br from-teal-50/80 to-slate-50 p-5 sm:p-6">
+            <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-teal-900">
+              Precios
+            </h2>
+            <ul className="space-y-2">
+              {priceLines.map((line) => (
+                <li key={line} className="font-semibold text-slate-800">
+                  {line}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
 
-        {/* Itinerario */}
-        {tour.itinerario?.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-3">Itinerario</h2>
-            <ul className="space-y-2">
-              {tour.itinerario.map((item: string, i: number) => (
-                <li key={i} className="flex gap-3 text-gray-700">
-                  <span className="text-teal-600 font-bold">{i + 1}.</span>
+        {itinerario.length > 0 && (
+          <div>
+            <h2 className="mb-4 text-xl font-bold text-slate-900">Itinerario</h2>
+            <ol className="space-y-3">
+              {itinerario.map((item, i) => (
+                <li key={`${item}-${i}`} className="flex gap-3 text-slate-700">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-600 text-xs font-bold text-white">
+                    {i + 1}
+                  </span>
+                  <span className="pt-0.5 leading-relaxed">{item}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+
+        {(incluye.length > 0 || noIncluye.length > 0) && (
+          <div className="grid gap-6 md:grid-cols-2">
+            {incluye.length > 0 && (
+              <div className="rounded-2xl border border-teal-100 bg-teal-50/50 p-5">
+                <h2 className="mb-3 text-lg font-bold text-teal-900">Incluye</h2>
+                <ul className="space-y-2">
+                  {incluye.map((item) => (
+                    <li key={item} className="flex gap-2 text-slate-700">
+                      <Check
+                        size={16}
+                        className="mt-0.5 shrink-0 text-teal-700"
+                      />
+                      <span className="text-sm leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {noIncluye.length > 0 && (
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                <h2 className="mb-3 text-lg font-bold text-slate-800">
+                  No incluye
+                </h2>
+                <ul className="space-y-2">
+                  {noIncluye.map((item) => (
+                    <li key={item} className="flex gap-2 text-slate-600">
+                      <XCircle
+                        size={16}
+                        className="mt-0.5 shrink-0 text-slate-400"
+                      />
+                      <span className="text-sm leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
+
+        {recomendaciones.length > 0 && (
+          <div>
+            <h2 className="mb-3 text-xl font-bold text-slate-900">
+              Recomendaciones
+            </h2>
+            <ul className="grid gap-2 sm:grid-cols-2">
+              {recomendaciones.map((item) => (
+                <li
+                  key={item}
+                  className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm leading-relaxed text-slate-600"
+                >
                   {item}
                 </li>
               ))}
@@ -98,81 +238,43 @@ export default async function TourDetallePage({
           </div>
         )}
 
-        {/* Incluye / No incluye */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          {tour.incluye?.length > 0 && (
-            <div>
-              <h2 className="text-xl font-semibold mb-3 text-green-700">Incluye</h2>
-              <ul className="space-y-1.5">
-                {tour.incluye.map((item: string, i: number) => (
-                  <li key={i} className="flex gap-2 text-gray-700">
-                    <span className="text-green-600">✓</span> {item}
-                  </li>
-                ))}
-              </ul>
+        {importante.length > 0 && (
+          <div className="rounded-2xl border border-amber-200 bg-amber-50/70 p-5">
+            <div className="mb-3 flex items-center gap-2">
+              <AlertTriangle size={18} className="text-amber-700" />
+              <h2 className="text-lg font-bold text-amber-900">Importante</h2>
             </div>
-          )}
-
-          {tour.no_incluye?.length > 0 && (
-            <div>
-              <h2 className="text-xl font-semibold mb-3 text-red-600">No incluye</h2>
-              <ul className="space-y-1.5">
-                {tour.no_incluye.map((item: string, i: number) => (
-                  <li key={i} className="flex gap-2 text-gray-700">
-                    <span className="text-red-500">✗</span> {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        {/* Recomendaciones */}
-        {tour.recomendaciones?.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-3">Recomendaciones</h2>
-            <ul className="space-y-1.5">
-              {tour.recomendaciones.map((item: string, i: number) => (
-                <li key={i} className="flex gap-2 text-gray-700">
-                  <span>•</span> {item}
+            <ul className="space-y-2">
+              {importante.map((item) => (
+                <li
+                  key={item}
+                  className="text-sm leading-relaxed text-amber-950/80"
+                >
+                  • {item}
                 </li>
               ))}
             </ul>
           </div>
         )}
 
-        {/* Importante */}
-        {tour.importante?.length > 0 && (
-          <div className="mb-10 p-5 bg-amber-50 rounded-2xl">
-            <h2 className="text-xl font-semibold mb-3 text-amber-800">Importante</h2>
-            <ul className="space-y-1.5">
-              {tour.importante.map((item: string, i: number) => (
-                <li key={i} className="flex gap-2 text-amber-900">
-                  <span>⚠</span> {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* CTA */}
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col gap-3 pt-2 sm:flex-row">
           <a
-            href="https://wa.me/5219990000000?text=Hola,%20me%20interesa%20el%20tour%20"
+            href={wa}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-green-600 hover:bg-green-700 text-white text-center font-medium px-8 py-3.5 rounded-xl transition"
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 py-3.5 text-sm font-semibold text-white shadow-md transition hover:bg-[#1ebe57]"
           >
+            <MessageCircle size={18} />
             Cotizar por WhatsApp
           </a>
           <Link
             href={`/tours/${destino}`}
-            className="border border-gray-300 hover:bg-gray-50 text-center font-medium px-8 py-3.5 rounded-xl transition"
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-slate-800 transition hover:bg-slate-50"
           >
             Ver más tours
           </Link>
         </div>
       </section>
-    </div>
+    </main>
   );
 }

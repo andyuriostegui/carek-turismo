@@ -46,7 +46,7 @@ export default function TrasladoZoneCard({ zone }: TrasladoZoneCardProps) {
 
         <div className="mt-auto">
           <Link
-            href={`/traslados?zona=${zone.id}#cotizacion`}
+            href={`/traslados?region=${zone.id === "cancun-riviera" ? "cancun" : zone.id}#rutas`}
             className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 hover:bg-teal-900 text-white px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
           >
             Solicitar este traslado

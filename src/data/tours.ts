@@ -87,7 +87,7 @@ export const tourCategories: TourCategory[] = [
     description:
       "«La muy noble y muy leal ciudad de Mérida» combina modernidad y un rico pasado cultural: cenotes, zonas arqueológicas, arquitectura colonial y haciendas henequeneras.",
     image:
-      "https://images.unsplash.com/photo-1587595431973-160d0d94add1?auto=format&fit=crop&w=1200&q=80",
+      "/merida.jpg",
     imageAlt: "Arquitectura colonial y calles de Mérida",
   },
   {
@@ -107,7 +107,7 @@ export const tourCategories: TourCategory[] = [
     description:
       "El estado más enigmático de México: selva, cascadas, pueblos mágicos, cultura viva y sitios arqueológicos como Palenque.",
     image:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
+      "/chiapas.jpg",
     imageAlt: "Paisaje natural de montañas y selva en Chiapas",
   },
   {

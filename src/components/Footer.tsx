@@ -1,6 +1,12 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import type { ReactNode } from "react";
+import {
+  CAREK_EMAIL_LIST,
+  CAREK_PHONE_DISPLAY,
+  CAREK_PHONE_TEL,
+  whatsappUrl,
+} from "@/lib/contact";
 
 const explore = [
   { name: "Inicio", href: "/" },
@@ -45,7 +51,7 @@ const social: { name: string; href: string; icon: ReactNode }[] = [
   { name: "Facebook", href: "https://facebook.com", icon: <FacebookIcon /> },
   {
     name: "WhatsApp",
-    href: "https://wa.me/18090000000?text=Hola%20CAREK%2C%20quiero%20informaci%C3%B3n",
+    href: whatsappUrl("Hola CAREK, quiero información"),
     icon: <MessageCircle size={18} />,
   },
 ];
@@ -74,7 +80,7 @@ export default function Footer() {
               Pedir cotización
             </Link>
             <a
-              href="https://wa.me/18090000000?text=Hola%20CAREK%2C%20quiero%20cotizar"
+              href={whatsappUrl("Hola CAREK, quiero cotizar")}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white font-semibold px-6 py-3 text-sm transition-colors"
@@ -146,19 +152,21 @@ export default function Footer() {
             <h3 className="text-white text-sm font-semibold tracking-wide uppercase mb-4">Contacto</h3>
             <ul className="space-y-3.5">
               <li>
-                <a href="tel:+18090000000" className="inline-flex items-start gap-2.5 text-sm text-slate-400 hover:text-white transition-colors">
-                  <Phone size={16} className="mt-0.5 shrink-0 text-teal-400" /> +1 (809) 000-0000
+                <a href={CAREK_PHONE_TEL} className="inline-flex items-start gap-2.5 text-sm text-slate-400 hover:text-white transition-colors">
+                  <Phone size={16} className="mt-0.5 shrink-0 text-teal-400" /> {CAREK_PHONE_DISPLAY}
                 </a>
               </li>
-              <li>
-                <a href="mailto:hola@carekturismo.com" className="inline-flex items-start gap-2.5 text-sm text-slate-400 hover:text-white transition-colors">
-                  <Mail size={16} className="mt-0.5 shrink-0 text-teal-400" /> hola@carekturismo.com
-                </a>
-              </li>
+              {CAREK_EMAIL_LIST.map((email) => (
+                <li key={email}>
+                  <a href={`mailto:${email}`} className="inline-flex items-start gap-2.5 text-sm text-slate-400 hover:text-white transition-colors break-all">
+                    <Mail size={16} className="mt-0.5 shrink-0 text-teal-400" /> {email}
+                  </a>
+                </li>
+              ))}
               <li className="inline-flex items-start gap-2.5 text-sm text-slate-400">
                 <MapPin size={16} className="mt-0.5 shrink-0 text-teal-400" />
                 <span>
-                  República Dominicana<br />
+                  Cancún, Quintana Roo<br />
                   <span className="text-slate-500">Lun–Sáb · 8:00–20:00</span>
                 </span>
               </li>

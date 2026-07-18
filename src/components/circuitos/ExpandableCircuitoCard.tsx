@@ -2,9 +2,8 @@
 import Link from "next/link";
 import { Check, ChevronDown, Clock, MessageCircle } from "lucide-react";
 import type { Circuito } from "@/data/circuitos";
+import { whatsappUrl as buildWhatsappUrl } from "@/lib/contact";
 import { cn } from "@/lib/utils";
-
-const WHATSAPP_BASE = "https://wa.me/18090000000";
 
 type ExpandableCircuitoCardProps = {
   circuito: Circuito;
@@ -17,9 +16,9 @@ export default function ExpandableCircuitoCard({
   isExpanded,
   onToggle,
 }: ExpandableCircuitoCardProps) {
-  const whatsappUrl = `${WHATSAPP_BASE}?text=${encodeURIComponent(
+  const whatsappUrl = buildWhatsappUrl(
     `Hola CAREK, me interesa el circuito "${circuito.name}". ¿Me pueden dar más información y una cotización?`,
-  )}`;
+  );
 
   return (
     <article

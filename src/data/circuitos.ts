@@ -4,11 +4,13 @@ export type Circuito = {
   duration: string;
   /** Resumen corto para la tarjeta */
   summary: string;
-  /** Descripción completa en la expansión */
+  /** Descripción completa en el modal */
   description: string;
   includes: string[];
   image: string;
   imageAlt: string;
+  /** Fotos adicionales para el modal */
+  gallery: string[];
 };
 
 export type CircuitoCategory = {
@@ -44,6 +46,12 @@ export const circuitoCategories: CircuitoCategory[] = [
         image:
           "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
         imageAlt: "Paisaje de montañas y selva en Chiapas",
+        gallery: [
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1200&q=80",
+        ],
       },
       {
         id: "paquetes-chiapas-economicos",
@@ -64,6 +72,11 @@ export const circuitoCategories: CircuitoCategory[] = [
         image:
           "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80",
         imageAlt: "Naturaleza y vegetación tropical en Chiapas",
+        gallery: [
+          "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+        ],
       },
       {
         id: "chiapas-villahermosa-tuxtla",
@@ -85,6 +98,11 @@ export const circuitoCategories: CircuitoCategory[] = [
         image:
           "https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1200&q=80",
         imageAlt: "Zona arqueológica maya en la selva",
+        gallery: [
+          "https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80",
+        ],
       },
       {
         id: "chiapas-tuxtla-tuxtla",
@@ -106,6 +124,11 @@ export const circuitoCategories: CircuitoCategory[] = [
         image:
           "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
         imageAlt: "Paisaje natural con montañas y cielo abierto",
+        gallery: [
+          "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1200&q=80",
+        ],
       },
     ],
   },
@@ -113,7 +136,7 @@ export const circuitoCategories: CircuitoCategory[] = [
     id: "campeche",
     title: "Circuitos por Campeche",
     description:
-      "Ciudad amurallada, calakmul y el legado maya del Golfo en paquetes de varios días.",
+      "Ciudad amurallada, Calakmul y el legado maya del Golfo en paquetes de varios días.",
     circuitos: [
       {
         id: "viajes-campeche",
@@ -134,6 +157,11 @@ export const circuitoCategories: CircuitoCategory[] = [
         image:
           "https://images.unsplash.com/photo-1585464231875-d9ef1f5ad396?auto=format&fit=crop&w=1200&q=80",
         imageAlt: "Ciudad amurallada de Campeche al atardecer",
+        gallery: [
+          "https://images.unsplash.com/photo-1585464231875-d9ef1f5ad396?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+        ],
       },
     ],
   },
@@ -163,6 +191,12 @@ export const circuitoCategories: CircuitoCategory[] = [
         image:
           "https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1200&q=80",
         imageAlt: "Templo maya entre la selva",
+        gallery: [
+          "https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+        ],
       },
       {
         id: "chiapas-campeche-merida-cancun",
@@ -184,6 +218,12 @@ export const circuitoCategories: CircuitoCategory[] = [
         image:
           "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=1200&q=80",
         imageAlt: "Costa del Caribe mexicano",
+        gallery: [
+          "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1585464231875-d9ef1f5ad396?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
+        ],
       },
     ],
   },
@@ -212,6 +252,12 @@ export const circuitoCategories: CircuitoCategory[] = [
         image:
           "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
         imageAlt: "Playa tropical de arena blanca y mar turquesa",
+        gallery: [
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1510097467424-192d713fd8b2?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=80",
+        ],
       },
       {
         id: "bacalar-mahahual",
@@ -232,7 +278,21 @@ export const circuitoCategories: CircuitoCategory[] = [
         image:
           "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1200&q=80",
         imageAlt: "Aguas turquesas de Bacalar y la Costa Maya",
+        gallery: [
+          "https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=80",
+        ],
       },
     ],
   },
 ];
+
+/** Lista plana de todos los circuitos (útil para el navbar). */
+export function getAllCircuitos(): Circuito[] {
+  return circuitoCategories.flatMap((cat) => cat.circuitos);
+}
+
+export function getCircuitoById(id: string): Circuito | undefined {
+  return getAllCircuitos().find((c) => c.id === id);
+}

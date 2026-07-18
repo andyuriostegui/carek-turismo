@@ -33,7 +33,7 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* ========== VIDEO DE FONDO ========== */}
+      {/* Video de fondo */}
       <video
         autoPlay
         muted
@@ -46,26 +46,24 @@ export default function Hero() {
         <source src="/intro.mp4" type="video/mp4" />
       </video>
 
-      {/* ========== OVERLAY OSCURO ========== */}
-      <div className="absolute inset-0 bg-black/60" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/70" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
+      {/* Overlay más claro */}
+      <div className="absolute inset-0 bg-black/5" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20" />
 
-      {/* ========== CONTENIDO ========== */}
+      {/* Contenido */}
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 pt-24 pb-16 text-center">
         
-        {/* Badge */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 text-white/80 text-sm font-medium tracking-wide mb-5"
+          className="inline-flex items-center gap-2 text-white/90 text-sm font-medium tracking-wide mb-5"
         >
           <MapPin size={16} className="text-teal-300" />
           Explora destinos únicos con CAREK
         </motion.p>
 
-        {/* Título */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -76,18 +74,17 @@ export default function Hero() {
           <span className="block text-teal-300">aventura inolvidable</span>
         </motion.h1>
 
-        {/* Subtítulo */}
         <motion.p
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto mb-10"
+          className="text-white/90 text-base sm:text-lg max-w-2xl mx-auto mb-10"
         >
           Tours, circuitos y traslados pensados para que viajes sin
           preocupaciones. Encuentra tu experiencia ideal.
         </motion.p>
 
-        {/* Categorías */}
+        {/* Categorías y búsqueda (mismo que antes) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -110,7 +107,6 @@ export default function Hero() {
           ))}
         </motion.div>
 
-        {/* Barra de búsqueda */}
         <motion.form
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
@@ -137,7 +133,6 @@ export default function Hero() {
           </button>
         </motion.form>
 
-        {/* Sugerencias */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { type ChangeEvent, type FormEvent, useState } from "react";
 import {
@@ -11,6 +11,12 @@ import {
   Shield,
   Sparkles,
 } from "lucide-react";
+import {
+  CAREK_EMAIL_LIST,
+  CAREK_PHONE_DISPLAY,
+  CAREK_PHONE_TEL,
+  whatsappUrl,
+} from "@/lib/contact";
 
 const benefits = [
   {
@@ -63,10 +69,9 @@ export default function Contact() {
     setStatus("sent");
   }
 
-  const whatsappMessage = encodeURIComponent(
+  const waUrl = whatsappUrl(
     "Hola CAREK, quiero cotizar un viaje. ¿Me ayudan?",
   );
-  const whatsappUrl = `https://wa.me/18090000000?text=${whatsappMessage}`;
 
   return (
     <section
@@ -117,7 +122,7 @@ export default function Contact() {
               </p>
               <div className="flex flex-col gap-3">
                 <a
-                  href={whatsappUrl}
+                  href={waUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold px-5 py-3.5 transition-colors"
@@ -126,19 +131,22 @@ export default function Contact() {
                   WhatsApp — cotizar ahora
                 </a>
                 <a
-                  href="tel:+18090000000"
+                  href={CAREK_PHONE_TEL}
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 text-white font-medium px-5 py-3 transition-colors"
                 >
                   <Phone size={18} />
-                  +1 (809) 000-0000
+                  {CAREK_PHONE_DISPLAY}
                 </a>
-                <a
-                  href="mailto:hola@carekturismo.com"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 text-white font-medium px-5 py-3 transition-colors"
-                >
-                  <Mail size={18} />
-                  hola@carekturismo.com
-                </a>
+                {CAREK_EMAIL_LIST.map((email) => (
+                  <a
+                    key={email}
+                    href={`mailto:${email}`}
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 text-white font-medium px-5 py-3 transition-colors text-sm break-all"
+                  >
+                    <Mail size={18} className="shrink-0" />
+                    {email}
+                  </a>
+                ))}
               </div>
               <p className="mt-4 text-xs text-white/50 text-center">
                 Lun–Sáb · 8:00–20:00 · Respuesta prioritaria por WhatsApp
@@ -164,7 +172,7 @@ export default function Contact() {
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <a
-                      href={whatsappUrl}
+                      href={waUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white font-semibold px-6 py-3 transition-colors"
@@ -227,7 +235,7 @@ export default function Contact() {
                           type="tel"
                           value={form.phone}
                           onChange={handleChange}
-                          placeholder="+1 809..."
+                          placeholder="99 82 33 56 69"
                           className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100 transition"
                         />
                       </label>

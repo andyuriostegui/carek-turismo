@@ -1,12 +1,9 @@
 "use client";
 
 import { MessageCircle } from "lucide-react";
+import { whatsappTrasladoUrl } from "@/lib/traslados";
 
-const WHATSAPP_URL =
-  "https://wa.me/18090000000?text=" +
-  encodeURIComponent(
-    "Hola CAREK, quiero cotizar un traslado privado. ¿Me ayudan?",
-  );
+const WHATSAPP_URL = whatsappTrasladoUrl();
 
 export default function WhatsAppFloat() {
   return (

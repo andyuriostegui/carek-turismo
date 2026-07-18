@@ -18,6 +18,7 @@ import {
   Users,
 } from "lucide-react";
 import { trasladoZones } from "@/data/traslados";
+import { whatsappUrl as buildWhatsappUrl } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
 const ORIGEN_OPTIONS = ["Aeropuerto", "Hotel", "Otro"] as const;
@@ -89,12 +90,11 @@ export default function TrasladoQuoteForm() {
     setStatus("sent");
   }
 
-  const whatsappText = encodeURIComponent(
+  const whatsappUrl = buildWhatsappUrl(
     zonaNombre
       ? `Hola CAREK, quiero cotizar un traslado en ${zonaNombre}.`
       : "Hola CAREK, quiero cotizar un traslado privado.",
   );
-  const whatsappUrl = `https://wa.me/18090000000?text=${whatsappText}`;
 
   const inputClass =
     "w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100 transition";
@@ -228,7 +228,7 @@ export default function TrasladoQuoteForm() {
                       type="tel"
                       value={form.phone}
                       onChange={handleChange}
-                      placeholder="+52 998..."
+                      placeholder="99 82 33 56 69"
                       autoComplete="tel"
                       className={inputClass}
                     />

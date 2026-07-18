@@ -30,7 +30,7 @@ const categories = [
   { 
     name: "Islas", 
     href: "/tours/holbox", 
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" 
+    image: "/islas.jpg" 
   },
 ];
 
@@ -192,12 +192,12 @@ export default function Featured() {
 // Función auxiliar para asignar imagen según el destino
 function getDestinationImage(slug: string) {
   const images: Record<string, string> = {
-    "costa-maya":   "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80",   // Cenote
+    "costa-maya":   "/cenotes.jpg",   // Cenote
     "cancun":       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",   // Playa
-    "chichen-itza": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80",   // Pirámide
-    "cozumel":      "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?w=800&q=80",      // Isla
-    "merida":       "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&q=80",   // Ciudad
-    "campeche":     "https://images.unsplash.com/photo-1520986606214-8b456906c813?w=800&q=80",   // Ciudad colonial (mejorada)
+    "chichen-itza": "/cultura.jpg",   // Pirámide
+    "cozumel":      "/islas.jpg",      // Isla
+    "merida":       "/merida.jpg",   // Ciudad
+    "campeche":     "/campeche.jpg",   // Ciudad colonial (mejorada)
   };
   
   return images[slug] || "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80";

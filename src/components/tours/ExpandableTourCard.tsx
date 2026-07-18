@@ -2,10 +2,9 @@
 import Link from "next/link";
 import { ChevronDown, Clock, MessageCircle } from "lucide-react";
 import type { DetailedTour } from "@/data/tours";
+import { whatsappUrl as buildWhatsappUrl } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 import TourDetailSections from "./TourDetailSections";
-
-const WHATSAPP_BASE = "https://wa.me/18090000000";
 
 type ExpandableTourCardProps = {
   tour: DetailedTour;
@@ -18,9 +17,9 @@ export default function ExpandableTourCard({
   isExpanded,
   onToggle,
 }: ExpandableTourCardProps) {
-  const whatsappUrl = `${WHATSAPP_BASE}?text=${encodeURIComponent(
+  const whatsappUrl = buildWhatsappUrl(
     `Hola CAREK, me interesa el tour "${tour.name}". ¿Me pueden dar más información?`,
-  )}`;
+  );
 
   return (
     <article

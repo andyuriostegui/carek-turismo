@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -47,11 +47,11 @@ export default function WhyChooseUs() {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <span className="text-xs font-semibold tracking-[3px] uppercase text-teal-600 mb-3 block">
+          <span className="text-xs font-semibold tracking-[3px] uppercase text-primary-600 mb-3 block">
             La diferencia Carek
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 tracking-tight mb-4">
-            ¿Por qué viajar con <span className="text-teal-700">Carek</span>?
+            ¿Por qué viajar con <span className="text-primary-700">Carek</span>?
           </h2>
           <p className="text-lg text-slate-600">
             Más que tours: experiencias auténticas en el sureste mexicano, 
@@ -68,7 +68,7 @@ export default function WhyChooseUs() {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="group bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300"
             >
-              <div className="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-6 group-hover:bg-teal-100 transition-colors">
+              <div className="w-12 h-12 rounded-2xl bg-primary-50 text-primary-600 flex items-center justify-center mb-6 group-hover:bg-primary-100 transition-colors">
                 <reason.icon size={24} strokeWidth={2} />
               </div>
               
@@ -92,7 +92,7 @@ export default function WhyChooseUs() {
             </div>
             <Link 
               href="/#contacto"
-              className="inline-flex items-center gap-2 bg-teal-700 hover:bg-teal-600 text-white font-semibold px-7 py-3.5 rounded-xl transition-all active:scale-[0.985]"
+              className="inline-flex items-center gap-2 bg-primary-700 hover:bg-primary-600 text-white font-semibold px-7 py-3.5 rounded-xl transition-all active:scale-[0.985]"
             >
               Cotiza tu experiencia
               <ArrowRight size={18} />

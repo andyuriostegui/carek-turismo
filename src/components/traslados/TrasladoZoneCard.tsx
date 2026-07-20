@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Car } from "lucide-react";
 import type { TrasladoZone } from "@/data/traslados";
@@ -20,7 +20,7 @@ export default function TrasladoZoneCard({ zone }: TrasladoZoneCardProps) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/55 via-transparent to-transparent" />
         <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 backdrop-blur-sm text-slate-900 text-xs font-semibold px-3 py-1.5 shadow-sm">
-          <Car size={13} className="text-teal-700" />
+          <Car size={13} className="text-primary-700" />
           Traslado privado
         </span>
       </div>
@@ -37,7 +37,7 @@ export default function TrasladoZoneCard({ zone }: TrasladoZoneCardProps) {
           {zone.highlights.map((item) => (
             <li
               key={item}
-              className="rounded-full bg-teal-50 text-teal-900 text-xs font-medium px-2.5 py-1 border border-teal-100"
+              className="rounded-full bg-primary-50 text-primary-900 text-xs font-medium px-2.5 py-1 border border-primary-100"
             >
               {item}
             </li>
@@ -47,7 +47,7 @@ export default function TrasladoZoneCard({ zone }: TrasladoZoneCardProps) {
         <div className="mt-auto">
           <Link
             href={`/traslados?region=${zone.id === "cancun-riviera" ? "cancun" : zone.id}#rutas`}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 hover:bg-teal-900 text-white px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 hover:bg-primary-900 text-white px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
           >
             Solicitar este traslado
             <ArrowRight size={16} className="shrink-0" />

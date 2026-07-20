@@ -59,8 +59,8 @@ export default function TrasladosListing({
       <div className="mb-8 sm:mb-10">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-5">
           <div className="max-w-xl">
-            <span className="inline-flex items-center gap-2 rounded-full bg-teal-50 text-teal-900 text-xs font-semibold tracking-wide uppercase px-3 py-1.5 mb-3 border border-teal-100">
-              <Car size={14} className="text-teal-700" />
+            <span className="inline-flex items-center gap-2 rounded-full bg-primary-50 text-primary-900 text-xs font-semibold tracking-wide uppercase px-3 py-1.5 mb-3 border border-primary-100">
+              <Car size={14} className="text-primary-700" />
               {filtered.length}{" "}
               {filtered.length === 1 ? "ruta" : "rutas"} · Servicio privado
             </span>
@@ -72,7 +72,7 @@ export default function TrasladosListing({
             </p>
           </div>
           <p className="text-sm text-slate-500 inline-flex items-center gap-1.5 shrink-0">
-            <Filter size={14} className="text-teal-700" />
+            <Filter size={14} className="text-primary-700" />
             {filtered.length}{" "}
             {filtered.length === 1 ? "resultado" : "resultados"}
           </p>
@@ -98,7 +98,7 @@ export default function TrasladosListing({
                     "rounded-full px-4 py-2 text-sm font-semibold transition-all border",
                     active
                       ? "bg-slate-900 text-white border-slate-900 shadow-md shadow-slate-900/15"
-                      : "bg-white text-slate-600 border-slate-200 hover:border-teal-300 hover:text-teal-800",
+                      : "bg-white text-slate-600 border-slate-200 hover:border-primary-300 hover:text-primary-800",
                   )}
                 >
                   {label}
@@ -135,14 +135,14 @@ export default function TrasladosListing({
             <button
               type="button"
               onClick={() => setZona("todas")}
-              className="text-sm font-semibold text-teal-700 hover:text-teal-600"
+              className="text-sm font-semibold text-primary-700 hover:text-primary-600"
             >
               Ver todos los traslados
             </button>
           ) : (
             <Link
               href={allHref}
-              className="text-sm font-semibold text-teal-700 hover:text-teal-600"
+              className="text-sm font-semibold text-primary-700 hover:text-primary-600"
             >
               Ver todos los traslados
             </Link>

@@ -42,7 +42,7 @@ export default function CircuitosNav({
         {/* Categorías */}
         <div className="flex items-center gap-2 overflow-x-auto py-3 scrollbar-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <span className="mr-1 hidden shrink-0 items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-slate-400 sm:inline-flex">
-            <Compass size={14} className="text-teal-600" />
+            <Compass size={14} className="text-primary-600" />
             Filtro
           </span>
           <button
@@ -65,7 +65,7 @@ export default function CircuitosNav({
               className={cn(
                 "shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors sm:text-sm",
                 activeCategoryId === cat.id
-                  ? "bg-teal-600 text-white shadow-sm shadow-teal-600/25"
+                  ? "bg-primary-600 text-white shadow-sm shadow-primary-600/25"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200",
               )}
             >
@@ -92,21 +92,21 @@ export default function CircuitosNav({
                 className={cn(
                   "group flex max-w-[280px] shrink-0 items-center gap-2.5 rounded-2xl border px-3 py-2 text-left transition-all",
                   isActive
-                    ? "border-teal-300 bg-teal-50 shadow-sm ring-1 ring-teal-200"
-                    : "border-slate-200 bg-white hover:border-teal-200 hover:bg-teal-50/50 hover:shadow-sm",
+                    ? "border-primary-300 bg-primary-50 shadow-sm ring-1 ring-primary-200"
+                    : "border-slate-200 bg-white hover:border-primary-200 hover:bg-primary-50/50 hover:shadow-sm",
                 )}
               >
                 <span
                   className={cn(
                     "h-2 w-2 shrink-0 rounded-full",
-                    isActive ? "bg-teal-600" : "bg-slate-300 group-hover:bg-teal-500",
+                    isActive ? "bg-primary-600" : "bg-slate-300 group-hover:bg-primary-500",
                   )}
                 />
                 <span className="min-w-0">
                   <span
                     className={cn(
                       "block truncate text-xs font-semibold leading-snug sm:text-sm",
-                      isActive ? "text-teal-900" : "text-slate-800",
+                      isActive ? "text-primary-900" : "text-slate-800",
                     )}
                   >
                     {circuito.name}

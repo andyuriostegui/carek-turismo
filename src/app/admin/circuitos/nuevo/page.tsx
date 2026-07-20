@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import ImageUpload from "@/components/admin/ImageUpload";
+import { toImagePayload } from "@/lib/images";
 
 export default function NuevoCircuitoPage() {
   const router = useRouter();
@@ -15,6 +17,7 @@ export default function NuevoCircuitoPage() {
     slug: "",
     descripcion_corta: "",
     descripcion_larga: "",
+    imagenes: [] as string[],
     duracion: "",
     precio_desde_mxn: "",
     precio_desde_usd: "",
@@ -60,11 +63,13 @@ export default function NuevoCircuitoPage() {
     setMensaje("");
 
     const supabase = createClient();
+    const imagePayload = toImagePayload(form.imagenes);
     const { error } = await supabase.from("circuitos").insert({
       titulo: form.titulo,
       slug: form.slug,
       descripcion_corta: form.descripcion_corta,
       descripcion_larga: form.descripcion_larga,
+      ...imagePayload,
       duracion: form.duracion,
       precio_desde_mxn: form.precio_desde_mxn ? Number(form.precio_desde_mxn) : null,
       precio_desde_usd: form.precio_desde_usd ? Number(form.precio_desde_usd) : null,
@@ -122,6 +127,14 @@ export default function NuevoCircuitoPage() {
               className="w-full border border-gray-300 rounded-xl px-4 py-2.5 bg-gray-50 outline-none"
             />
           </div>
+
+          <ImageUpload
+            folder="circuitos"
+            value={form.imagenes}
+            onChange={(urls) => setForm((prev) => ({ ...prev, imagenes: urls }))}
+            label="Fotos del circuito"
+            disabled={loading}
+          />
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">Descripción corta</label>

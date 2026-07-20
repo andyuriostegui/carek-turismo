@@ -23,7 +23,7 @@ export default async function AdminDashboardPage() {
     <div className="space-y-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-medium text-teal-600">Resumen general</p>
+          <p className="text-sm font-medium text-primary-600">Resumen general</p>
           <h2 className="mt-1 text-2xl font-semibold tracking-tight text-slate-900">
             Bienvenido al panel
           </h2>
@@ -34,7 +34,7 @@ export default async function AdminDashboardPage() {
         </div>
         <Link
           href="/admin/tours/nuevo"
-          className="inline-flex items-center justify-center gap-2 rounded-lg bg-teal-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-teal-700"
+          className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-primary-700"
         >
           <Plus className="h-4 w-4" />
           Nuevo tour
@@ -47,14 +47,14 @@ export default async function AdminDashboardPage() {
           value={stats.totalTours}
           description="Registrados en el sistema"
           icon={Map}
-          accent="teal"
+          accent="primary"
         />
         <StatCard
           title="Total de circuitos"
           value={stats.totalCircuitos}
           description="Paquetes de varios días"
           icon={Compass}
-          accent="blue"
+          accent="accent"
         />
         <StatCard
           title="Total de destinos"
@@ -68,7 +68,7 @@ export default async function AdminDashboardPage() {
           value={stats.toursActivos}
           description="Publicados en el sitio"
           icon={CheckCircle2}
-          accent="amber"
+          accent="gold"
         />
       </div>
 
@@ -81,7 +81,7 @@ export default async function AdminDashboardPage() {
             </div>
             <Link
               href="/admin/tours"
-              className="inline-flex items-center gap-1 text-sm font-medium text-teal-600 hover:text-teal-700"
+              className="inline-flex items-center gap-1 text-sm font-medium text-primary-600 hover:text-primary-700"
             >
               Ver todos
               <ArrowRight className="h-4 w-4" />
@@ -129,7 +129,7 @@ export default async function AdminDashboardPage() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2.5 text-sm text-slate-700 transition hover:border-teal-200 hover:bg-teal-50/50 hover:text-teal-800"
+                  className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2.5 text-sm text-slate-700 transition hover:border-primary-200 hover:bg-primary-50/50 hover:text-primary-800"
                 >
                   {item.label}
                   <ArrowRight className="h-4 w-4 text-slate-400" />

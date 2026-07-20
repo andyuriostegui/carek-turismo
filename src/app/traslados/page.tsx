@@ -214,7 +214,7 @@ export default async function TrasladosPage({
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="#rutas"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-600 hover:bg-teal-500 text-white font-semibold px-7 py-3.5 text-sm shadow-lg shadow-teal-900/30 transition-colors"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary-600 hover:bg-primary-500 text-white font-semibold px-7 py-3.5 text-sm shadow-lg shadow-primary-900/30 transition-colors"
             >
               Ver rutas
               <ArrowRight size={16} />
@@ -256,7 +256,7 @@ export default async function TrasladosPage({
                     "shrink-0 rounded-full px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold transition-all border whitespace-nowrap",
                     active
                       ? "bg-[#0f172a] text-white border-[#0f172a] shadow-md shadow-slate-900/15"
-                      : "bg-white text-slate-600 border-slate-200 hover:border-teal-300 hover:text-teal-800 hover:bg-teal-50/50",
+                      : "bg-white text-slate-600 border-slate-200 hover:border-primary-300 hover:text-primary-800 hover:bg-primary-50/50",
                   )}
                 >
                   {tab.label}
@@ -273,7 +273,7 @@ export default async function TrasladosPage({
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
             {highlights.map(({ icon: Icon, title, text }) => (
               <div key={title} className="flex items-start gap-3.5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-700 border border-teal-100">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-700 border border-primary-100">
                   <Icon size={20} />
                 </div>
                 <div>
@@ -301,7 +301,7 @@ export default async function TrasladosPage({
                 href={wa}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-teal-800 hover:text-teal-700"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-primary-800 hover:text-primary-700"
               >
                 <MessageCircle size={16} />
                 Cotiza por WhatsApp mientras tanto
@@ -347,7 +347,7 @@ export default async function TrasladosPage({
               </a>
               <Link
                 href="/#contacto"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-600 hover:bg-teal-500 text-white font-semibold px-7 py-3.5 text-sm transition-colors"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-primary-600 hover:bg-primary-500 text-white font-semibold px-7 py-3.5 text-sm transition-colors"
               >
                 Formulario
                 <ArrowRight size={16} />

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -119,7 +119,7 @@ export default function Featured() {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <span className="text-sm font-medium text-slate-700 group-hover:text-teal-700 transition-colors">
+                  <span className="text-sm font-medium text-slate-700 group-hover:text-primary-700 transition-colors">
                     {cat.name}
                   </span>
                 </Link>
@@ -140,7 +140,7 @@ export default function Featured() {
           </div>
           <Link
             href="/tours"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-teal-700 hover:text-teal-600"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-primary-700 hover:text-primary-600"
           >
             Ver todos
             <ArrowRight size={16} />

@@ -79,19 +79,19 @@ export default function Contact() {
       className="relative bg-slate-50 text-slate-900 py-20 sm:py-28 overflow-hidden"
     >
       {/* Decoración sutil */}
-      <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-teal-200/40 blur-3xl" />
+      <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary-200/40 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-emerald-200/30 blur-3xl" />
 
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Encabezado comercial */}
         <div className="max-w-2xl mb-12 sm:mb-16">
-          <span className="inline-flex items-center gap-2 rounded-full bg-teal-100 text-teal-900 text-xs font-semibold tracking-wide uppercase px-3 py-1.5 mb-4">
+          <span className="inline-flex items-center gap-2 rounded-full bg-primary-100 text-primary-900 text-xs font-semibold tracking-wide uppercase px-3 py-1.5 mb-4">
             <Sparkles size={14} />
             Empieza tu viaje hoy
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4">
             ¿Listo para viajar?{" "}
-            <span className="text-teal-700">Te armamos la cotización</span>
+            <span className="text-primary-700">Te armamos la cotización</span>
           </h2>
           <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
             Cuéntanos qué buscas y te enviamos opciones claras con precios,
@@ -105,7 +105,7 @@ export default function Contact() {
             <ul className="space-y-5">
               {benefits.map(({ icon: Icon, title, text }) => (
                 <li key={title} className="flex gap-4">
-                  <div className="shrink-0 flex h-11 w-11 items-center justify-center rounded-xl bg-white shadow-sm border border-slate-100 text-teal-700">
+                  <div className="shrink-0 flex h-11 w-11 items-center justify-center rounded-xl bg-white shadow-sm border border-slate-100 text-primary-700">
                     <Icon size={20} />
                   </div>
                   <div>
@@ -159,7 +159,7 @@ export default function Contact() {
             <div className="rounded-3xl bg-white border border-slate-200/80 shadow-xl shadow-slate-200/50 p-6 sm:p-8">
               {status === "sent" ? (
                 <div className="flex flex-col items-center text-center py-12 px-4">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 mb-5">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent-100 text-accent-600 mb-5">
                     <CheckCircle2 size={36} />
                   </div>
                   <h3 className="text-2xl font-bold text-slate-900 mb-2">
@@ -222,7 +222,7 @@ export default function Contact() {
                           value={form.name}
                           onChange={handleChange}
                           placeholder="Tu nombre"
-                          className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100 transition"
+                          className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition"
                         />
                       </label>
                       <label className="block">
@@ -236,7 +236,7 @@ export default function Contact() {
                           value={form.phone}
                           onChange={handleChange}
                           placeholder="99 82 33 56 69"
-                          className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100 transition"
+                          className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition"
                         />
                       </label>
                     </div>
@@ -252,7 +252,7 @@ export default function Contact() {
                         value={form.email}
                         onChange={handleChange}
                         placeholder="tu@email.com"
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100 transition"
+                        className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition"
                       />
                     </label>
 
@@ -264,7 +264,7 @@ export default function Contact() {
                         name="interest"
                         value={form.interest}
                         onChange={handleChange}
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100 transition"
+                        className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition"
                       >
                         {interests.map((item) => (
                           <option key={item} value={item}>
@@ -284,13 +284,13 @@ export default function Contact() {
                         onChange={handleChange}
                         rows={4}
                         placeholder="Destino, fechas, número de personas, presupuesto aproximado..."
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100 transition resize-y min-h-[120px]"
+                        className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition resize-y min-h-[120px]"
                       />
                     </label>
 
                     <button
                       type="submit"
-                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-teal-700 hover:bg-teal-600 text-white font-semibold px-6 py-4 transition-colors shadow-lg shadow-teal-700/25"
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary-700 hover:bg-primary-600 text-white font-semibold px-6 py-4 transition-colors shadow-lg shadow-primary-700/25"
                     >
                       <Send size={18} />
                       Quiero mi cotización gratis

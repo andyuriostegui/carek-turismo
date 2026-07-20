@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import ImageUpload from "@/components/admin/ImageUpload";
+import { normalizeImagenes, toImagePayload } from "@/lib/images";
 
 export default function EditarTrasladoPage() {
   const router = useRouter();
@@ -18,6 +20,7 @@ export default function EditarTrasladoPage() {
     zona: "",
     titulo: "",
     descripcion: "",
+    imagenes: [] as string[],
     precio_desde_mxn: "",
     precio_desde_usd: "",
     activo: true,
@@ -43,6 +46,7 @@ export default function EditarTrasladoPage() {
         zona: data.zona || "",
         titulo: data.titulo || "",
         descripcion: data.descripcion || "",
+        imagenes: normalizeImagenes(data.imagenes, data.imagen_url),
         precio_desde_mxn: data.precio_desde_mxn?.toString() || "",
         precio_desde_usd: data.precio_desde_usd?.toString() || "",
         activo: data.activo ?? true,
@@ -67,10 +71,12 @@ export default function EditarTrasladoPage() {
     setMensaje("");
 
     const supabase = createClient();
+    const imagePayload = toImagePayload(form.imagenes);
     const { error } = await supabase.from("traslados").update({
       zona: form.zona,
       titulo: form.titulo,
       descripcion: form.descripcion,
+      ...imagePayload,
       precio_desde_mxn: form.precio_desde_mxn ? Number(form.precio_desde_mxn) : null,
       precio_desde_usd: form.precio_desde_usd ? Number(form.precio_desde_usd) : null,
       activo: form.activo,
@@ -129,6 +135,14 @@ export default function EditarTrasladoPage() {
               className="w-full border border-gray-300 rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+
+          <ImageUpload
+            folder="traslados"
+            value={form.imagenes}
+            onChange={(urls) => setForm((prev) => ({ ...prev, imagenes: urls }))}
+            label="Fotos del traslado"
+            disabled={saving}
+          />
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">Descripción</label>

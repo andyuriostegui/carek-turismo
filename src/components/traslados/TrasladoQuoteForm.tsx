@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   type ChangeEvent,
@@ -97,7 +97,7 @@ export default function TrasladoQuoteForm() {
   );
 
   const inputClass =
-    "w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-100 transition";
+    "w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition";
 
   return (
     <div className="grid lg:grid-cols-5 gap-8 lg:gap-10 items-start">
@@ -116,7 +116,7 @@ export default function TrasladoQuoteForm() {
         <ul className="space-y-4">
           {trustPoints.map(({ icon: Icon, text }) => (
             <li key={text} className="flex gap-3 items-start">
-              <div className="shrink-0 flex h-10 w-10 items-center justify-center rounded-xl bg-teal-50 text-teal-800 border border-teal-100">
+              <div className="shrink-0 flex h-10 w-10 items-center justify-center rounded-xl bg-primary-50 text-primary-800 border border-primary-100">
                 <Icon size={18} />
               </div>
               <p className="text-sm text-slate-600 leading-relaxed pt-2">
@@ -151,7 +151,7 @@ export default function TrasladoQuoteForm() {
         <div className="rounded-3xl bg-white border border-slate-200/80 shadow-xl shadow-slate-200/50 p-6 sm:p-8">
           {status === "sent" ? (
             <div className="flex flex-col items-center text-center py-10 px-2 sm:py-12">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 mb-5">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent-100 text-accent-600 mb-5">
                 <CheckCircle2 size={36} />
               </div>
               <h3 className="text-2xl font-bold text-slate-900 mb-2">
@@ -194,7 +194,7 @@ export default function TrasladoQuoteForm() {
                   Completa los datos del traslado. Los campos marcados son
                   obligatorios.
                   {zonaNombre && (
-                    <span className="block mt-2 text-teal-800 font-medium">
+                    <span className="block mt-2 text-primary-800 font-medium">
                       Zona seleccionada: {zonaNombre}
                     </span>
                   )}
@@ -397,7 +397,7 @@ export default function TrasladoQuoteForm() {
 
                 <button
                   type="submit"
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-teal-700 hover:bg-teal-600 text-white font-semibold px-6 py-4 text-base transition-colors shadow-lg shadow-teal-700/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary-700 hover:bg-primary-600 text-white font-semibold px-6 py-4 text-base transition-colors shadow-lg shadow-primary-700/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
                 >
                   <Send size={18} />
                   Solicitar Cotización

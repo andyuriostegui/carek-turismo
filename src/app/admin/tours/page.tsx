@@ -87,7 +87,7 @@ export default async function AdminToursPage() {
                   <td className="px-6 py-4">
                     <div className="font-medium text-gray-900">{tour.titulo}</div>
                     {tour.destacado && (
-                      <span className="text-xs text-emerald-600 font-medium">Destacado</span>
+                      <span className="text-xs text-gold-600 font-medium">Destacado</span>
                     )}
                   </td>
 
@@ -107,7 +107,7 @@ export default async function AdminToursPage() {
                     <span
                       className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
                         tour.activo
-                          ? "bg-emerald-50 text-emerald-700"
+                          ? "bg-accent-50 text-accent-600"
                           : "bg-gray-100 text-gray-600"
                       }`}
                     >

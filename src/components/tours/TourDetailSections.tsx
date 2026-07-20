@@ -1,4 +1,4 @@
-﻿import type { DetailedTour } from "@/data/tours";
+import type { DetailedTour } from "@/data/tours";
 
 type Section = {
   title: string;
@@ -35,7 +35,13 @@ export default function TourDetailSections({ tour }: TourDetailSectionsProps) {
             key={section.title}
             className="rounded-xl bg-slate-50 border border-slate-100 p-4 sm:p-5"
           >
-            <h4 className="text-sm font-bold uppercase tracking-wide text-teal-900 mb-3">
+            <h4
+              className={`text-sm font-bold uppercase tracking-wide mb-3 ${
+                section.title === "Precios"
+                  ? "text-gold-600"
+                  : "text-primary-900"
+              }`}
+            >
               {section.title}
             </h4>
             <ul className="space-y-2">
@@ -45,7 +51,13 @@ export default function TourDetailSections({ tour }: TourDetailSectionsProps) {
                   className="flex gap-2.5 text-sm text-slate-600 leading-relaxed"
                 >
                   <span
-                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-600"
+                    className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${
+                      section.title === "Precios"
+                        ? "bg-gold-500"
+                        : section.title === "Incluye"
+                          ? "bg-accent-500"
+                          : "bg-primary-600"
+                    }`}
                     aria-hidden
                   />
                   <span>{item}</span>

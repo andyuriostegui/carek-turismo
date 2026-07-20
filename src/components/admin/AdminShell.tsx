@@ -13,6 +13,7 @@ const titles: Record<string, string> = {
   "/admin/circuitos": "Circuitos",
   "/admin/traslados": "Traslados",
   "/admin/destinos": "Destinos",
+  "/admin/destinos/nuevo": "Nuevo destino",
   "/admin/login": "Iniciar sesión",
 };
 
@@ -119,7 +120,7 @@ export default function AdminShell({
                   {userEmail || "admin@carekturismo.com"}
                 </p>
               </div>
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-teal-100 text-sm font-semibold text-teal-700">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-100 text-sm font-semibold text-primary-700">
                 A
               </div>
             </div>

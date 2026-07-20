@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import ImageUpload from "@/components/admin/ImageUpload";
+import { normalizeImagenes, toImagePayload } from "@/lib/images";
 
 export default function EditarTourPage() {
   const router = useRouter();
@@ -21,6 +23,7 @@ export default function EditarTourPage() {
     destino_id: "",
     descripcion_corta: "",
     descripcion_larga: "",
+    imagenes: [] as string[],
     precio_adulto_mxn: "",
     precio_adulto_usd: "",
     precio_menor_mxn: "",
@@ -66,6 +69,7 @@ export default function EditarTourPage() {
         destino_id: tour.destino_id || "",
         descripcion_corta: tour.descripcion_corta || "",
         descripcion_larga: tour.descripcion_larga || "",
+        imagenes: normalizeImagenes(tour.imagenes, tour.imagen_url),
         precio_adulto_mxn: tour.precio_adulto_mxn?.toString() || "",
         precio_adulto_usd: tour.precio_adulto_usd?.toString() || "",
         precio_menor_mxn: tour.precio_menor_mxn?.toString() || "",
@@ -107,12 +111,14 @@ export default function EditarTourPage() {
     setMensaje("");
 
     const supabase = createClient();
+    const imagePayload = toImagePayload(form.imagenes);
     const { error } = await supabase.from("tours").update({
       titulo: form.titulo,
       slug: form.slug,
       destino_id: form.destino_id || null,
       descripcion_corta: form.descripcion_corta,
       descripcion_larga: form.descripcion_larga,
+      ...imagePayload,
       precio_adulto_mxn: form.precio_adulto_mxn ? Number(form.precio_adulto_mxn) : null,
       precio_adulto_usd: form.precio_adulto_usd ? Number(form.precio_adulto_usd) : null,
       precio_menor_mxn: form.precio_menor_mxn ? Number(form.precio_menor_mxn) : null,
@@ -200,6 +206,18 @@ export default function EditarTourPage() {
               </select>
             </div>
           </div>
+        </div>
+
+        {/* Galería */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <h2 className="text-lg font-semibold mb-5">Galería de imágenes</h2>
+          <ImageUpload
+            folder="tours"
+            value={form.imagenes}
+            onChange={(urls) => setForm((prev) => ({ ...prev, imagenes: urls }))}
+            label="Fotos del tour"
+            disabled={saving}
+          />
         </div>
 
         {/* Descripciones */}

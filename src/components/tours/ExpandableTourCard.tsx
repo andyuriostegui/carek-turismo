@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Clock, MessageCircle } from "lucide-react";
 import type { DetailedTour } from "@/data/tours";
@@ -27,7 +27,7 @@ export default function ExpandableTourCard({
       className={cn(
         "flex h-fit flex-col rounded-2xl overflow-hidden bg-white border shadow-md shadow-slate-100/80 transition-all duration-300",
         isExpanded
-          ? "col-span-full border-teal-200 shadow-xl shadow-teal-100/60"
+          ? "col-span-full border-primary-200 shadow-xl shadow-primary-100/60"
           : "border-slate-200/80 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-200/80",
       )}
     >
@@ -53,7 +53,7 @@ export default function ExpandableTourCard({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/45 via-transparent to-transparent" />
           <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 backdrop-blur-sm text-slate-900 text-xs font-semibold px-3 py-1.5 shadow-sm">
-            <Clock size={13} className="text-teal-700" />
+            <Clock size={13} className="text-primary-700" />
             {tour.duration}
           </span>
         </div>
@@ -75,7 +75,7 @@ export default function ExpandableTourCard({
             <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
               Precio desde
             </span>
-            <span className="mt-0.5 block text-xl font-bold text-teal-800 tracking-tight">
+            <span className="mt-0.5 block text-xl font-bold text-gold-600 tracking-tight">
               {tour.priceFrom}
             </span>
           </p>
@@ -87,10 +87,10 @@ export default function ExpandableTourCard({
               aria-expanded={isExpanded}
               aria-controls={`tour-details-${tour.id}`}
               className={cn(
-                "inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2",
+                "inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2",
                 isExpanded
                   ? "bg-slate-100 text-slate-900 hover:bg-slate-200"
-                  : "bg-slate-900 hover:bg-teal-900 text-white",
+                  : "bg-slate-900 hover:bg-primary-900 text-white",
               )}
             >
               {isExpanded ? "Ocultar detalles" : "Ver detalles"}
@@ -132,7 +132,7 @@ export default function ExpandableTourCard({
               </a>
               <Link
                 href="/#contacto"
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-900 bg-white hover:bg-slate-900 hover:text-white text-slate-900 px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-900 bg-white hover:bg-slate-900 hover:text-white text-slate-900 px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
               >
                 Solicitar cotización
               </Link>

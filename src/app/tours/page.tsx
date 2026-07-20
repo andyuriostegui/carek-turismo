@@ -88,8 +88,8 @@ export default async function ToursPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-10 flex flex-col gap-4 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-xl">
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-teal-100 bg-teal-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-teal-900">
-                <Compass size={14} className="text-teal-700" />
+              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-100 bg-primary-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary-900">
+                <Compass size={14} className="text-primary-700" />
                 {categories.length} destinos · Experiencias únicas
               </span>
               <h2 className="text-2xl font-bold tracking-tight text-[#0f172a] sm:text-3xl">
@@ -147,7 +147,7 @@ export default async function ToursPage() {
               </a>
               <Link
                 href="/#contacto"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-teal-600/25 transition-colors hover:bg-teal-500"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-primary-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary-600/25 transition-colors hover:bg-primary-500"
               >
                 Pedir cotización
                 <ArrowRight size={16} />

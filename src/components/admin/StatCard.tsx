@@ -6,21 +6,21 @@ type StatCardProps = {
   value: number | string;
   description?: string;
   icon: LucideIcon;
-  accent?: "teal" | "blue" | "amber" | "violet";
+  accent?: "primary" | "accent" | "gold" | "violet";
 };
 
 const accents = {
-  teal: {
-    iconBg: "bg-teal-50 text-teal-600",
-    ring: "ring-teal-100",
+  primary: {
+    iconBg: "bg-primary-50 text-primary-600",
+    ring: "ring-primary-100",
   },
-  blue: {
-    iconBg: "bg-blue-50 text-blue-600",
-    ring: "ring-blue-100",
+  accent: {
+    iconBg: "bg-accent-50 text-accent-600",
+    ring: "ring-accent-100",
   },
-  amber: {
-    iconBg: "bg-amber-50 text-amber-600",
-    ring: "ring-amber-100",
+  gold: {
+    iconBg: "bg-gold-400/15 text-gold-600",
+    ring: "ring-gold-400/30",
   },
   violet: {
     iconBg: "bg-violet-50 text-violet-600",
@@ -33,7 +33,7 @@ export default function StatCard({
   value,
   description,
   icon: Icon,
-  accent = "teal",
+  accent = "primary",
 }: StatCardProps) {
   const colors = accents[accent];
 

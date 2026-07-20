@@ -20,7 +20,7 @@ import {
   getBodasGrupos,
   getIncluye,
   getPrecios,
-  getTrasladoImage,
+  getTrasladoImages,
   getVehiculos,
   whatsappTrasladoUrl,
   type Traslado,
@@ -56,27 +56,11 @@ type PanelProps = {
   onClose: () => void;
 };
 
-function buildGallery(traslado: Traslado): string[] {
-  const main = getTrasladoImage(traslado);
-  const fromVehicles = getVehiculos(traslado)
-    .map((v) => v.imagen)
-    .filter((src): src is string => Boolean(src));
-  const seen = new Set<string>([main]);
-  const photos = [main];
-  for (const src of fromVehicles) {
-    if (!seen.has(src)) {
-      seen.add(src);
-      photos.push(src);
-    }
-  }
-  return photos;
-}
-
 function TrasladoModalPanel({ traslado, onClose }: PanelProps) {
   const titleId = useId();
   const [activePhoto, setActivePhoto] = useState(0);
 
-  const photos = buildGallery(traslado);
+  const photos = getTrasladoImages(traslado);
   const incluye = getIncluye(traslado);
   const precios = getPrecios(traslado);
   const vehiculos = getVehiculos(traslado);
@@ -192,11 +176,11 @@ function TrasladoModalPanel({ traslado, onClose }: PanelProps) {
               <div className="mb-3 flex flex-wrap items-center gap-2">
                 {traslado.zona && (
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-sm backdrop-blur-sm">
-                    <MapPin size={13} className="text-teal-700" />
+                    <MapPin size={13} className="text-primary-700" />
                     {traslado.zona}
                   </span>
                 )}
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-600/95 px-3 py-1.5 text-xs font-semibold text-white shadow-sm">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-600/95 px-3 py-1.5 text-xs font-semibold text-white shadow-sm">
                   <Car size={13} />
                   Traslado privado
                 </span>
@@ -208,7 +192,7 @@ function TrasladoModalPanel({ traslado, onClose }: PanelProps) {
                 {traslado.titulo}
               </h2>
               {traslado.precio_desde_usd != null && (
-                <p className="mt-2 text-base font-semibold text-teal-200 sm:text-lg">
+                <p className="mt-2 text-base font-semibold text-gold-400 sm:text-lg">
                   Desde ${traslado.precio_desde_usd} USD
                   {traslado.precio_desde_mxn != null && (
                     <span className="ml-2 text-sm font-medium text-white/60">
@@ -230,7 +214,7 @@ function TrasladoModalPanel({ traslado, onClose }: PanelProps) {
                   className={cn(
                     "relative h-14 w-20 shrink-0 overflow-hidden rounded-lg ring-offset-2 transition sm:h-16 sm:w-24",
                     activePhoto === i
-                      ? "ring-2 ring-teal-600"
+                      ? "ring-2 ring-primary-600"
                       : "opacity-70 hover:opacity-100",
                   )}
                   aria-label={`Ver foto ${i + 1}`}
@@ -255,8 +239,8 @@ function TrasladoModalPanel({ traslado, onClose }: PanelProps) {
             </p>
 
             {/* Incluye */}
-            <section className="rounded-2xl border border-teal-100 bg-gradient-to-br from-teal-50/80 to-slate-50 p-5 sm:p-6">
-              <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-teal-900">
+            <section className="rounded-2xl border border-primary-100 bg-gradient-to-br from-primary-50/80 to-slate-50 p-5 sm:p-6">
+              <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-primary-900">
                 Qué incluye
               </h3>
               <ul className="grid gap-2.5 sm:grid-cols-2">
@@ -265,7 +249,7 @@ function TrasladoModalPanel({ traslado, onClose }: PanelProps) {
                     key={item}
                     className="flex gap-2.5 text-sm leading-relaxed text-slate-700"
                   >
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-teal-600/10 text-teal-700">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-500/15 text-accent-600">
                       <Check size={12} strokeWidth={3} aria-hidden />
                     </span>
                     <span>{item}</span>
@@ -294,7 +278,7 @@ function TrasladoModalPanel({ traslado, onClose }: PanelProps) {
                         key={v.nombre}
                         className="flex gap-3 rounded-xl border border-slate-200 bg-white p-3.5"
                       >
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary-700">
                           <Icon size={18} />
                         </div>
                         <div className="min-w-0">
@@ -302,7 +286,7 @@ function TrasladoModalPanel({ traslado, onClose }: PanelProps) {
                             {v.nombre}
                           </p>
                           {v.capacidad && (
-                            <p className="text-xs font-medium text-teal-700">
+                            <p className="text-xs font-medium text-primary-700">
                               {v.capacidad}
                             </p>
                           )}
@@ -340,7 +324,7 @@ function TrasladoModalPanel({ traslado, onClose }: PanelProps) {
                       <div className="shrink-0 sm:text-right">
                         {p.desde_usd != null ? (
                           <>
-                            <p className="text-base font-bold tabular-nums text-teal-700">
+                            <p className="text-base font-bold tabular-nums text-gold-600">
                               desde ${p.desde_usd} USD
                             </p>
                             {p.desde_mxn != null && (
@@ -363,10 +347,10 @@ function TrasladoModalPanel({ traslado, onClose }: PanelProps) {
 
             {/* Bodas & grupos (resumen) */}
             {bodas && (
-              <section className="rounded-2xl border border-teal-100 bg-teal-50/40 p-5">
+              <section className="rounded-2xl border border-primary-100 bg-primary-50/40 p-5">
                 <div className="mb-2 flex items-center gap-2">
-                  <Heart size={16} className="text-teal-700" />
-                  <h3 className="text-sm font-bold uppercase tracking-wide text-teal-900">
+                  <Heart size={16} className="text-primary-700" />
+                  <h3 className="text-sm font-bold uppercase tracking-wide text-primary-900">
                     Bodas &amp; grupos
                   </h3>
                 </div>
@@ -389,7 +373,7 @@ function TrasladoModalPanel({ traslado, onClose }: PanelProps) {
               <Link
                 href="/#contacto"
                 onClick={onClose}
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-900 bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-teal-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-900 bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-primary-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
               >
                 Solicitar cotización
               </Link>

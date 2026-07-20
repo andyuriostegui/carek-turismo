@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { TourCategory } from "@/data/tours";
@@ -24,7 +24,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
 
       {/* Contenido */}
       <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
-        <p className="text-teal-300/90 text-xs font-semibold uppercase tracking-wider mb-1.5">
+        <p className="text-primary-300/90 text-xs font-semibold uppercase tracking-wider mb-1.5">
           Destino
         </p>
         <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight mb-4 leading-snug">
@@ -32,7 +32,7 @@ export default function CategoryCard({ category }: CategoryCardProps) {
         </h2>
         <Link
           href={`/tours/${category.slug}`}
-          className="inline-flex w-fit items-center gap-2 rounded-full bg-white text-[#0f172a] px-5 py-2.5 text-sm font-semibold shadow-md transition-all hover:bg-teal-50 hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
+          className="inline-flex w-fit items-center gap-2 rounded-full bg-white text-[#0f172a] px-5 py-2.5 text-sm font-semibold shadow-md transition-all hover:bg-primary-50 hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
         >
           Ver tours
           <ArrowRight size={16} className="shrink-0" />

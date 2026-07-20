@@ -58,8 +58,8 @@ export default function CircuitosExplorer({
       <section className="bg-gradient-to-b from-slate-50/80 to-white py-12 sm:py-16 lg:py-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-10 max-w-2xl sm:mb-12">
-            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-teal-100 bg-teal-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-teal-900">
-              <Compass size={14} className="text-teal-700" />
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-100 bg-primary-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary-900">
+              <Compass size={14} className="text-primary-700" />
               {totalCount} circuitos · Paquetes de varios días
             </span>
             <h2 className="text-2xl font-bold tracking-tight text-[#0f172a] sm:text-3xl">
@@ -90,7 +90,7 @@ export default function CircuitosExplorer({
                       id={`circuito-${circuito.id}`}
                       className={cn(
                         "group flex flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-md shadow-slate-100/80 transition-all duration-300",
-                        "hover:-translate-y-0.5 hover:border-teal-200 hover:shadow-xl hover:shadow-teal-100/40",
+                        "hover:-translate-y-0.5 hover:border-primary-200 hover:shadow-xl hover:shadow-primary-100/40",
                       )}
                     >
                       <button
@@ -107,7 +107,7 @@ export default function CircuitosExplorer({
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent" />
                         <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-sm backdrop-blur-sm">
-                          <Clock size={13} className="text-teal-700" />
+                          <Clock size={13} className="text-primary-700" />
                           {circuito.duration}
                         </span>
                         <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-black/40 px-2.5 py-1 text-[11px] font-medium text-white opacity-0 backdrop-blur-sm transition group-hover:opacity-100">
@@ -126,7 +126,7 @@ export default function CircuitosExplorer({
                         <button
                           type="button"
                           onClick={() => openModal(circuito)}
-                          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-teal-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+                          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
                         >
                           Ver detalles
                           <Eye size={16} className="shrink-0 opacity-80" />
@@ -156,7 +156,7 @@ export default function CircuitosExplorer({
             </div>
             <Link
               href="/#contacto"
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-teal-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-teal-600/25 transition-colors hover:bg-teal-500"
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-primary-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary-600/25 transition-colors hover:bg-primary-500"
             >
               Pedir cotización
               <ArrowRight size={16} />

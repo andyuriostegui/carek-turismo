@@ -18,7 +18,7 @@ import {
 import {
   getArrayField,
   getPriceLines,
-  getTourImage,
+  getTourImages,
   whatsappTourUrl,
   type Tour,
 } from "@/lib/tours";
@@ -62,8 +62,7 @@ function TourModalPanel({ tour, onClose, destinoSlug }: PanelProps) {
   const titleId = useId();
   const [activePhoto, setActivePhoto] = useState(0);
 
-  const mainImage = getTourImage(tour, destinoSlug);
-  const photos = [mainImage];
+  const photos = getTourImages(tour, destinoSlug);
 
   const incluye = getArrayField(tour.incluye);
   const noIncluye = getArrayField(tour.no_incluye);
@@ -178,6 +177,22 @@ function TourModalPanel({ tour, onClose, destinoSlug }: PanelProps) {
                 >
                   <ChevronRight size={20} />
                 </button>
+                <div className="absolute bottom-24 left-1/2 z-10 flex -translate-x-1/2 gap-1.5 sm:bottom-28">
+                  {photos.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setActivePhoto(i)}
+                      aria-label={`Foto ${i + 1}`}
+                      className={cn(
+                        "h-1.5 rounded-full transition-all",
+                        i === activePhoto
+                          ? "w-6 bg-white"
+                          : "w-1.5 bg-white/50 hover:bg-white/80",
+                      )}
+                    />
+                  ))}
+                </div>
               </>
             )}
 
@@ -185,14 +200,19 @@ function TourModalPanel({ tour, onClose, destinoSlug }: PanelProps) {
               <div className="mb-3 flex flex-wrap items-center gap-2">
                 {destinoNombre && (
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-sm backdrop-blur-sm">
-                    <MapPin size={13} className="text-teal-700" />
+                    <MapPin size={13} className="text-primary-700" />
                     {destinoNombre}
                   </span>
                 )}
                 {tour.duracion && (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-600/95 px-3 py-1.5 text-xs font-semibold text-white shadow-sm">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-600/95 px-3 py-1.5 text-xs font-semibold text-white shadow-sm">
                     <Clock size={13} />
                     {tour.duracion}
+                  </span>
+                )}
+                {photos.length > 1 && (
+                  <span className="inline-flex items-center rounded-full bg-black/40 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-sm">
+                    {activePhoto + 1} / {photos.length}
                   </span>
                 )}
               </div>
@@ -203,7 +223,7 @@ function TourModalPanel({ tour, onClose, destinoSlug }: PanelProps) {
                 {tour.titulo}
               </h2>
               {tour.precio_adulto_usd != null && (
-                <p className="mt-2 text-base font-semibold text-teal-200 sm:text-lg">
+                <p className="mt-2 text-base font-semibold text-gold-400 sm:text-lg">
                   Desde ${tour.precio_adulto_usd} USD
                   {tour.precio_adulto_mxn != null && (
                     <span className="ml-2 text-sm font-medium text-white/60">
@@ -215,6 +235,28 @@ function TourModalPanel({ tour, onClose, destinoSlug }: PanelProps) {
             </div>
           </div>
 
+          {photos.length > 1 && (
+            <div className="flex gap-2 overflow-x-auto border-b border-slate-100 bg-slate-50 px-4 py-3 sm:px-6">
+              {photos.map((src, i) => (
+                <button
+                  key={`${src}-${i}`}
+                  type="button"
+                  onClick={() => setActivePhoto(i)}
+                  className={cn(
+                    "relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border-2 transition",
+                    i === activePhoto
+                      ? "border-primary-600 ring-1 ring-primary-200"
+                      : "border-transparent opacity-70 hover:opacity-100",
+                  )}
+                  aria-label={`Miniatura ${i + 1}`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={src} alt="" className="h-full w-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
+
           <div className="space-y-6 px-5 py-6 sm:px-7 sm:py-8">
             <p className="whitespace-pre-line text-base leading-relaxed text-slate-600 sm:text-[17px]">
               {descripcion}
@@ -222,8 +264,8 @@ function TourModalPanel({ tour, onClose, destinoSlug }: PanelProps) {
 
             {/* Precios */}
             {priceLines.length > 0 && (
-              <section className="rounded-2xl border border-teal-100 bg-gradient-to-br from-teal-50/80 to-slate-50 p-5 sm:p-6">
-                <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-teal-900">
+              <section className="rounded-2xl border border-gold-400/30 bg-gradient-to-br from-gold-400/10 to-slate-50 p-5 sm:p-6">
+                <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-gold-600">
                   Precios
                 </h3>
                 <ul className="space-y-2">
@@ -251,7 +293,7 @@ function TourModalPanel({ tour, onClose, destinoSlug }: PanelProps) {
                       key={`${item}-${i}`}
                       className="flex gap-3 text-sm leading-relaxed text-slate-700"
                     >
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal-600 text-[11px] font-bold text-white">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-600 text-[11px] font-bold text-white">
                         {i + 1}
                       </span>
                       <span className="pt-0.5">{item}</span>
@@ -265,8 +307,8 @@ function TourModalPanel({ tour, onClose, destinoSlug }: PanelProps) {
             {(incluye.length > 0 || noIncluye.length > 0) && (
               <div className="grid gap-4 sm:grid-cols-2">
                 {incluye.length > 0 && (
-                  <section className="rounded-2xl border border-teal-100 bg-gradient-to-br from-teal-50/80 to-slate-50 p-5">
-                    <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-teal-900">
+                  <section className="rounded-2xl border border-primary-100 bg-gradient-to-br from-primary-50/80 to-slate-50 p-5">
+                    <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-primary-900">
                       Qué incluye
                     </h3>
                     <ul className="space-y-2.5">
@@ -275,7 +317,7 @@ function TourModalPanel({ tour, onClose, destinoSlug }: PanelProps) {
                           key={item}
                           className="flex gap-2.5 text-sm leading-relaxed text-slate-700"
                         >
-                          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-teal-600/10 text-teal-700">
+                          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-500/15 text-accent-600">
                             <Check size={12} strokeWidth={3} aria-hidden />
                           </span>
                           <span>{item}</span>
@@ -321,7 +363,7 @@ function TourModalPanel({ tour, onClose, destinoSlug }: PanelProps) {
                       className="flex gap-2.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm leading-relaxed text-slate-600"
                     >
                       <span
-                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-600"
+                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-600"
                         aria-hidden
                       />
                       <span>{item}</span>
@@ -367,7 +409,7 @@ function TourModalPanel({ tour, onClose, destinoSlug }: PanelProps) {
               <Link
                 href="/#contacto"
                 onClick={onClose}
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-900 bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-teal-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-900 bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-primary-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
               >
                 Solicitar cotización
               </Link>

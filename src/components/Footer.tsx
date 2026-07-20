@@ -75,7 +75,7 @@ export default function Footer() {
           <div className="flex flex-col xs:flex-row gap-3">
             <Link
               href="/#contacto"
-              className="inline-flex items-center justify-center rounded-full bg-teal-700 hover:bg-teal-600 text-white font-semibold px-6 py-3 text-sm transition-colors"
+              className="inline-flex items-center justify-center rounded-full bg-primary-700 hover:bg-primary-600 text-white font-semibold px-6 py-3 text-sm transition-colors"
             >
               Pedir cotización
             </Link>
@@ -153,18 +153,18 @@ export default function Footer() {
             <ul className="space-y-3.5">
               <li>
                 <a href={CAREK_PHONE_TEL} className="inline-flex items-start gap-2.5 text-sm text-slate-400 hover:text-white transition-colors">
-                  <Phone size={16} className="mt-0.5 shrink-0 text-teal-400" /> {CAREK_PHONE_DISPLAY}
+                  <Phone size={16} className="mt-0.5 shrink-0 text-primary-400" /> {CAREK_PHONE_DISPLAY}
                 </a>
               </li>
               {CAREK_EMAIL_LIST.map((email) => (
                 <li key={email}>
                   <a href={`mailto:${email}`} className="inline-flex items-start gap-2.5 text-sm text-slate-400 hover:text-white transition-colors break-all">
-                    <Mail size={16} className="mt-0.5 shrink-0 text-teal-400" /> {email}
+                    <Mail size={16} className="mt-0.5 shrink-0 text-primary-400" /> {email}
                   </a>
                 </li>
               ))}
               <li className="inline-flex items-start gap-2.5 text-sm text-slate-400">
-                <MapPin size={16} className="mt-0.5 shrink-0 text-teal-400" />
+                <MapPin size={16} className="mt-0.5 shrink-0 text-primary-400" />
                 <span>
                   Cancún, Quintana Roo<br />
                   <span className="text-slate-500">Lun–Sáb · 8:00–20:00</span>

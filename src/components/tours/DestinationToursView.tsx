@@ -71,7 +71,7 @@ export default async function DestinationToursView({
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a
               href="#tours"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-teal-900/30 transition-colors hover:bg-teal-500"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-primary-900/30 transition-colors hover:bg-primary-500"
             >
               Ver tours
               <ArrowRight size={16} />
@@ -105,7 +105,7 @@ export default async function DestinationToursView({
                 href={wa}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-teal-800 hover:text-teal-700"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-primary-800 hover:text-primary-700"
               >
                 <MessageCircle size={16} />
                 Cotiza por WhatsApp mientras tanto
@@ -150,7 +150,7 @@ export default async function DestinationToursView({
               </a>
               <Link
                 href="/#contacto"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-600 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-teal-500"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-primary-600 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-primary-500"
               >
                 Formulario
                 <ArrowRight size={16} />

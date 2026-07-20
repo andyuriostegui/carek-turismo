@@ -76,7 +76,7 @@ export default async function AdminTrasladosPage() {
                   </td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
-                      item.activo ? "bg-emerald-50 text-emerald-700" : "bg-gray-100 text-gray-600"
+                      item.activo ? "bg-accent-50 text-accent-600" : "bg-gray-100 text-gray-600"
                     }`}>
                       {item.activo ? "Activo" : "Inactivo"}
                     </span>

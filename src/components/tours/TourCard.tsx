@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
 import type { Tour } from "@/data/tours";
@@ -22,7 +22,7 @@ export default function TourCard({ tour }: TourCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/50 via-transparent to-transparent" />
 
         <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 backdrop-blur-sm text-[#0f172a] text-xs font-semibold px-3 py-1.5 shadow-sm">
-          <Clock size={13} className="text-teal-700" />
+          <Clock size={13} className="text-primary-700" />
           {tour.duration}
         </span>
       </div>
@@ -39,7 +39,7 @@ export default function TourCard({ tour }: TourCardProps) {
         <div className="mt-auto pt-1">
           <Link
             href={tour.href}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0f172a] hover:bg-teal-800 text-white px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0f172a] hover:bg-primary-800 text-white px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
           >
             Más información
             <ArrowRight size={16} className="shrink-0" />

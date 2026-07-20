@@ -12,6 +12,7 @@ create table if not exists public.traslados (
   descripcion text,
   descripcion_larga text,
   imagen_url text,
+  imagenes jsonb not null default '[]'::jsonb,
   precio_desde_usd numeric(10, 2),
   precio_desde_mxn numeric(12, 2),
   incluye text[] default '{}',
@@ -29,6 +30,7 @@ create table if not exists public.traslados (
 alter table public.traslados add column if not exists slug text;
 alter table public.traslados add column if not exists descripcion_larga text;
 alter table public.traslados add column if not exists imagen_url text;
+alter table public.traslados add column if not exists imagenes jsonb not null default '[]'::jsonb;
 alter table public.traslados add column if not exists incluye text[] default '{}';
 alter table public.traslados add column if not exists valores jsonb default '[]'::jsonb;
 alter table public.traslados add column if not exists vehiculos jsonb default '[]'::jsonb;

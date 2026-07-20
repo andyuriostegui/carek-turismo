@@ -42,7 +42,7 @@ export default function ToursDestinosNav({
               "shrink-0 rounded-full border px-4 py-2 text-xs font-semibold whitespace-nowrap transition-all sm:px-5 sm:py-2.5 sm:text-sm",
               isTodos
                 ? "border-[#0f172a] bg-[#0f172a] text-white shadow-md shadow-slate-900/15"
-                : "border-slate-200 bg-white text-slate-600 hover:border-teal-300 hover:bg-teal-50/50 hover:text-teal-800",
+                : "border-slate-200 bg-white text-slate-600 hover:border-primary-300 hover:bg-primary-50/50 hover:text-primary-800",
             )}
           >
             Todos los destinos
@@ -61,7 +61,7 @@ export default function ToursDestinosNav({
                   "shrink-0 rounded-full border px-4 py-2 text-xs font-semibold whitespace-nowrap transition-all sm:px-5 sm:py-2.5 sm:text-sm",
                   active
                     ? "border-[#0f172a] bg-[#0f172a] text-white shadow-md shadow-slate-900/15"
-                    : "border-slate-200 bg-white text-slate-600 hover:border-teal-300 hover:bg-teal-50/50 hover:text-teal-800",
+                    : "border-slate-200 bg-white text-slate-600 hover:border-primary-300 hover:bg-primary-50/50 hover:text-primary-800",
                 )}
               >
                 {destino.label}

@@ -65,7 +65,7 @@ export default function AdminSidebar({ open, onClose }: AdminSidebarProps) {
       >
         <div className="flex h-16 items-center justify-between border-b border-slate-800 px-5">
           <Link href="/admin" className="flex items-center gap-2" onClick={onClose}>
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-500 text-sm font-bold text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-500 text-sm font-bold text-white">
               C
             </span>
             <div className="leading-tight">
@@ -97,14 +97,14 @@ export default function AdminSidebar({ open, onClose }: AdminSidebarProps) {
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                   active
-                    ? "bg-teal-500/15 text-teal-300"
+                    ? "bg-primary-500/15 text-primary-300"
                     : "text-slate-300 hover:bg-slate-800 hover:text-white"
                 )}
               >
                 <Icon
                   className={cn(
                     "h-4.5 w-4.5 shrink-0",
-                    active ? "text-teal-400" : "text-slate-400"
+                    active ? "text-primary-400" : "text-slate-400"
                   )}
                 />
                 {label}

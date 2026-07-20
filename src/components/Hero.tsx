@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -60,7 +60,7 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 text-white/90 text-sm font-medium tracking-wide mb-5"
         >
-          <MapPin size={16} className="text-teal-300" />
+          <MapPin size={16} className="text-primary-300" />
           Explora destinos únicos con CAREK
         </motion.p>
 
@@ -71,7 +71,7 @@ export default function Hero() {
           className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight tracking-tight mb-5"
         >
           Descubre tu próxima
-          <span className="block text-teal-300">aventura inolvidable</span>
+          <span className="block text-primary-300">aventura inolvidable</span>
         </motion.h1>
 
         <motion.p
@@ -98,7 +98,7 @@ export default function Hero() {
               onClick={() => setCategory(cat.id)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                 category === cat.id
-                  ? "bg-teal-600 text-white shadow-lg shadow-teal-900/30"
+                  ? "bg-primary-600 text-white shadow-lg shadow-primary-900/30"
                   : "bg-white/15 text-white hover:bg-white/25 backdrop-blur-sm"
               }`}
             >
@@ -127,7 +127,7 @@ export default function Hero() {
           </div>
           <button
             type="submit"
-            className="bg-teal-700 hover:bg-teal-600 text-white font-semibold px-8 py-3.5 sm:py-3 rounded-xl sm:rounded-full transition-colors shrink-0"
+            className="bg-primary-700 hover:bg-primary-600 text-white font-semibold px-8 py-3.5 sm:py-3 rounded-xl sm:rounded-full transition-colors shrink-0"
           >
             Buscar
           </button>
@@ -148,7 +148,7 @@ export default function Hero() {
                 setQuery(place);
                 router.push(`/tours?q=${encodeURIComponent(place)}`);
               }}
-              className="hover:text-teal-300 underline-offset-4 hover:underline transition-colors"
+              className="hover:text-primary-300 underline-offset-4 hover:underline transition-colors"
             >
               {place}
             </button>

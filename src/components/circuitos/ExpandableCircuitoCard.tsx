@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { Check, ChevronDown, Clock, MessageCircle } from "lucide-react";
 import type { Circuito } from "@/data/circuitos";
@@ -26,7 +26,7 @@ export default function ExpandableCircuitoCard({
       className={cn(
         "flex h-fit flex-col rounded-2xl overflow-hidden bg-white border shadow-md shadow-slate-100/80 transition-all duration-300",
         isExpanded
-          ? "col-span-full border-teal-200 shadow-xl shadow-teal-100/60"
+          ? "col-span-full border-primary-200 shadow-xl shadow-primary-100/60"
           : "border-slate-200/80 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-200/80",
       )}
     >
@@ -54,7 +54,7 @@ export default function ExpandableCircuitoCard({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/45 via-transparent to-transparent" />
           <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 backdrop-blur-sm text-slate-900 text-xs font-semibold px-3 py-1.5 shadow-sm">
-            <Clock size={13} className="text-teal-700" />
+            <Clock size={13} className="text-primary-700" />
             {circuito.duration}
           </span>
         </div>
@@ -79,10 +79,10 @@ export default function ExpandableCircuitoCard({
               aria-expanded={isExpanded}
               aria-controls={`circuito-details-${circuito.id}`}
               className={cn(
-                "inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2",
+                "inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2",
                 isExpanded
                   ? "bg-slate-100 text-slate-900 hover:bg-slate-200"
-                  : "bg-slate-900 hover:bg-teal-900 text-white",
+                  : "bg-slate-900 hover:bg-primary-900 text-white",
               )}
             >
               {isExpanded ? "Ocultar detalles" : "Ver detalles"}
@@ -115,7 +115,7 @@ export default function ExpandableCircuitoCard({
             </p>
 
             <section className="rounded-xl bg-slate-50 border border-slate-100 p-4 sm:p-5">
-              <h4 className="text-sm font-bold uppercase tracking-wide text-teal-900 mb-3">
+              <h4 className="text-sm font-bold uppercase tracking-wide text-primary-900 mb-3">
                 Incluye
               </h4>
               <ul className="space-y-2.5">
@@ -126,7 +126,7 @@ export default function ExpandableCircuitoCard({
                   >
                     <Check
                       size={16}
-                      className="mt-0.5 shrink-0 text-teal-700"
+                      className="mt-0.5 shrink-0 text-accent-600"
                       aria-hidden
                     />
                     <span>{item}</span>
@@ -147,7 +147,7 @@ export default function ExpandableCircuitoCard({
               </a>
               <Link
                 href="/#contacto"
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-900 bg-white hover:bg-slate-900 hover:text-white text-slate-900 px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-900 bg-white hover:bg-slate-900 hover:text-white text-slate-900 px-5 py-3 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
               >
                 Solicitar cotización
               </Link>

@@ -157,7 +157,7 @@ function CircuitoModalPanel({ circuito, onClose }: PanelProps) {
 
             <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7">
               <span className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-sm backdrop-blur-sm">
-                <Clock size={13} className="text-teal-700" />
+                <Clock size={13} className="text-primary-700" />
                 {circuito.duration}
               </span>
               <h2
@@ -179,7 +179,7 @@ function CircuitoModalPanel({ circuito, onClose }: PanelProps) {
                   className={cn(
                     "relative h-14 w-20 shrink-0 overflow-hidden rounded-lg ring-offset-2 transition sm:h-16 sm:w-24",
                     activePhoto === i
-                      ? "ring-2 ring-teal-600"
+                      ? "ring-2 ring-primary-600"
                       : "opacity-70 hover:opacity-100",
                   )}
                   aria-label={`Ver foto ${i + 1}`}
@@ -202,8 +202,8 @@ function CircuitoModalPanel({ circuito, onClose }: PanelProps) {
               {circuito.description}
             </p>
 
-            <section className="rounded-2xl border border-teal-100 bg-gradient-to-br from-teal-50/80 to-slate-50 p-5 sm:p-6">
-              <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-teal-900">
+            <section className="rounded-2xl border border-primary-100 bg-gradient-to-br from-primary-50/80 to-slate-50 p-5 sm:p-6">
+              <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-primary-900">
                 Qué incluye
               </h3>
               <ul className="grid gap-2.5 sm:grid-cols-2">
@@ -212,7 +212,7 @@ function CircuitoModalPanel({ circuito, onClose }: PanelProps) {
                     key={item}
                     className="flex gap-2.5 text-sm leading-relaxed text-slate-700"
                   >
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-teal-600/10 text-teal-700">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-500/15 text-accent-600">
                       <Check size={12} strokeWidth={3} aria-hidden />
                     </span>
                     <span>{item}</span>
@@ -234,7 +234,7 @@ function CircuitoModalPanel({ circuito, onClose }: PanelProps) {
               <Link
                 href="/#contacto"
                 onClick={onClose}
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-900 bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-teal-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-900 bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-primary-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
               >
                 Solicitar cotización
               </Link>

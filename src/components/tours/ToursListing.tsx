@@ -43,8 +43,8 @@ export default function ToursListing({
       <div className="mb-8 sm:mb-10">
         <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-xl">
-            <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-teal-100 bg-teal-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-teal-900">
-              <Compass size={14} className="text-teal-700" />
+            <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary-100 bg-primary-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary-900">
+              <Compass size={14} className="text-primary-700" />
               {tours.length}{" "}
               {tours.length === 1 ? "tour" : "tours"} · Experiencias
             </span>
@@ -83,7 +83,7 @@ export default function ToursListing({
           </p>
           <Link
             href={allHref}
-            className="text-sm font-semibold text-teal-700 hover:text-teal-600"
+            className="text-sm font-semibold text-primary-700 hover:text-primary-600"
           >
             Ver todos los destinos
           </Link>

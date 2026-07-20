@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { ArrowRight, BadgeCheck, Star } from "lucide-react";
 
 const summary = {
@@ -26,7 +26,7 @@ const reviews = [
   {
     name: "Carlos R.",
     initial: "C",
-    color: "bg-teal-700",
+    color: "bg-primary-700",
     rating: 5,
     time: "hace 1 mes",
     tour: "Circuito Samaná",
@@ -35,7 +35,7 @@ const reviews = [
   {
     name: "Laura M.",
     initial: "L",
-    color: "bg-emerald-600",
+    color: "bg-accent-600",
     rating: 5,
     time: "hace 3 semanas",
     tour: "Traslado VIP",
@@ -53,7 +53,7 @@ const reviews = [
   {
     name: "Sofía L.",
     initial: "S",
-    color: "bg-amber-500",
+    color: "bg-gold-500",
     rating: 4,
     time: "hace 2 meses",
     tour: "Punta Cana Full Day",
@@ -62,7 +62,7 @@ const reviews = [
   {
     name: "Diego H.",
     initial: "D",
-    color: "bg-teal-600",
+    color: "bg-primary-600",
     rating: 5,
     time: "hace 1 semana",
     tour: "Grupo empresa",
@@ -85,7 +85,7 @@ function Stars({
           size={size}
           className={
             i < value
-              ? "fill-amber-400 text-amber-400"
+              ? "fill-gold-400 text-gold-400"
               : "fill-slate-200 text-slate-200"
           }
         />
@@ -104,12 +104,12 @@ export default function Testimonials() {
         {/* Encabezado */}
         <div className="max-w-2xl mb-12 sm:mb-14">
           <span className="inline-flex items-center gap-2 rounded-full bg-white text-slate-700 text-xs font-semibold tracking-wide uppercase px-3 py-1.5 mb-4 border border-slate-200 shadow-sm">
-            <BadgeCheck size={14} className="text-teal-700" />
+            <BadgeCheck size={14} className="text-primary-700" />
             Opiniones de viajeros
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3">
             La confianza se gana{" "}
-            <span className="text-teal-700">viaje a viaje</span>
+            <span className="text-primary-700">viaje a viaje</span>
           </h2>
           <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
             Reseñas reales de clientes que ya viajaron con nosotros. Mismo
@@ -169,7 +169,7 @@ export default function Testimonials() {
                 </p>
                 <Link
                   href="/#contacto"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white text-slate-900 font-semibold px-4 py-3 text-sm hover:bg-teal-50 transition-colors"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white text-slate-900 font-semibold px-4 py-3 text-sm hover:bg-primary-50 transition-colors"
                 >
                   Contar mi experiencia
                   <ArrowRight size={16} />
@@ -205,7 +205,7 @@ export default function Testimonials() {
                       </h3>
                       <BadgeCheck
                         size={15}
-                        className="text-teal-600 shrink-0"
+                        className="text-primary-600 shrink-0"
                         aria-label="Cliente verificado"
                       />
                     </div>

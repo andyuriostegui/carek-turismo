@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -14,10 +13,11 @@ import { createClient } from "@/lib/supabase/server";
 import {
   getArrayField,
   getPriceLines,
-  getTourImage,
+  getTourImages,
   whatsappTourUrl,
   type Tour,
 } from "@/lib/tours";
+import DetailHeroGallery from "@/components/DetailHeroGallery";
 
 type PageProps = {
   params: Promise<{ destino: string; slug: string }>;
@@ -78,7 +78,7 @@ export default async function TourDetallePage({ params }: PageProps) {
 
   if (!tour) notFound();
 
-  const image = getTourImage(tour, destino);
+  const photos = getTourImages(tour, destino);
   const incluye = getArrayField(tour.incluye);
   const noIncluye = getArrayField(tour.no_incluye);
   const itinerario = getArrayField(tour.itinerario);
@@ -94,54 +94,50 @@ export default async function TourDetallePage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-white">
-      <section className="relative h-[50vh] min-h-[360px] overflow-hidden sm:h-[55vh]">
-        <Image
-          src={image}
-          alt={tour.titulo}
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-          unoptimized={image.startsWith("http")}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-slate-950/20" />
-
-        <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10">
-          <div className="mx-auto max-w-4xl">
-            <Link
-              href={`/tours/${destino}`}
-              className="mb-4 inline-block text-sm font-medium text-white/70 transition hover:text-white"
-            >
-              ← Volver a {destinoNombre}
-            </Link>
-            <div className="mb-3 flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900">
-                <MapPin size={13} className="text-teal-700" />
-                {destinoNombre}
+      <DetailHeroGallery
+        images={photos}
+        alt={tour.titulo}
+        className="h-[50vh] min-h-[360px] sm:h-[55vh]"
+      >
+        <div className="mx-auto max-w-4xl px-6 pb-10 pt-28 sm:px-10 sm:pb-14">
+          <Link
+            href={`/tours/${destino}`}
+            className="mb-4 inline-block text-sm font-medium text-white/70 transition hover:text-white"
+          >
+            ← Volver a {destinoNombre}
+          </Link>
+          <div className="mb-3 flex flex-wrap gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900">
+              <MapPin size={13} className="text-primary-700" />
+              {destinoNombre}
+            </span>
+            {tour.duracion && (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-600 px-3 py-1.5 text-xs font-semibold text-white">
+                <Clock size={13} />
+                {tour.duracion}
               </span>
-              {tour.duracion && (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-600 px-3 py-1.5 text-xs font-semibold text-white">
-                  <Clock size={13} />
-                  {tour.duracion}
-                </span>
-              )}
-            </div>
-            <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
-              {tour.titulo}
-            </h1>
-            {tour.precio_adulto_usd != null && (
-              <p className="mt-3 text-lg font-semibold text-teal-200">
-                Desde ${tour.precio_adulto_usd} USD
-                {tour.precio_adulto_mxn != null && (
-                  <span className="ml-2 text-sm font-medium text-white/60">
-                    ≈ ${tour.precio_adulto_mxn} MXN
-                  </span>
-                )}
-              </p>
+            )}
+            {photos.length > 1 && (
+              <span className="inline-flex items-center rounded-full bg-black/40 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-sm">
+                {photos.length} fotos
+              </span>
             )}
           </div>
+          <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+            {tour.titulo}
+          </h1>
+          {tour.precio_adulto_usd != null && (
+            <p className="mt-3 text-lg font-semibold text-gold-400">
+              Desde ${tour.precio_adulto_usd} USD
+              {tour.precio_adulto_mxn != null && (
+                <span className="ml-2 text-sm font-medium text-white/60">
+                  ≈ ${tour.precio_adulto_mxn} MXN
+                </span>
+              )}
+            </p>
+          )}
         </div>
-      </section>
+      </DetailHeroGallery>
 
       <section className="mx-auto max-w-4xl space-y-8 px-6 py-10 sm:py-14">
         {descripcion && (
@@ -151,8 +147,8 @@ export default async function TourDetallePage({ params }: PageProps) {
         )}
 
         {priceLines.length > 0 && (
-          <div className="rounded-2xl border border-teal-100 bg-gradient-to-br from-teal-50/80 to-slate-50 p-5 sm:p-6">
-            <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-teal-900">
+          <div className="rounded-2xl border border-gold-400/30 bg-gradient-to-br from-gold-400/10 to-slate-50 p-5 sm:p-6">
+            <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-gold-600">
               Precios
             </h2>
             <ul className="space-y-2">
@@ -171,7 +167,7 @@ export default async function TourDetallePage({ params }: PageProps) {
             <ol className="space-y-3">
               {itinerario.map((item, i) => (
                 <li key={`${item}-${i}`} className="flex gap-3 text-slate-700">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-600 text-xs font-bold text-white">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white">
                     {i + 1}
                   </span>
                   <span className="pt-0.5 leading-relaxed">{item}</span>
@@ -184,14 +180,14 @@ export default async function TourDetallePage({ params }: PageProps) {
         {(incluye.length > 0 || noIncluye.length > 0) && (
           <div className="grid gap-6 md:grid-cols-2">
             {incluye.length > 0 && (
-              <div className="rounded-2xl border border-teal-100 bg-teal-50/50 p-5">
-                <h2 className="mb-3 text-lg font-bold text-teal-900">Incluye</h2>
+              <div className="rounded-2xl border border-primary-100 bg-primary-50/50 p-5">
+                <h2 className="mb-3 text-lg font-bold text-primary-900">Incluye</h2>
                 <ul className="space-y-2">
                   {incluye.map((item) => (
                     <li key={item} className="flex gap-2 text-slate-700">
                       <Check
                         size={16}
-                        className="mt-0.5 shrink-0 text-teal-700"
+                        className="mt-0.5 shrink-0 text-accent-600"
                       />
                       <span className="text-sm leading-relaxed">{item}</span>
                     </li>

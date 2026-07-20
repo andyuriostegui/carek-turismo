@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -37,8 +37,8 @@ export default function PageHero({
         className="pointer-events-none absolute inset-0 opacity-40"
         aria-hidden
       >
-        <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-teal-600/20 blur-3xl" />
-        <div className="absolute -bottom-32 -left-16 h-80 w-80 rounded-full bg-teal-700/10 blur-3xl" />
+        <div className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-primary-600/20 blur-3xl" />
+        <div className="absolute -bottom-32 -left-16 h-80 w-80 rounded-full bg-primary-700/10 blur-3xl" />
       </div>
 
       <div

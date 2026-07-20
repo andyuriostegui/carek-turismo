@@ -93,7 +93,7 @@ export default function TrasladoDetailSections({ traslado }: Props) {
                 whileHover={{ y: -4 }}
                 className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-teal-50 text-teal-700 border border-teal-100">
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-primary-50 text-primary-700 border border-primary-100">
                   <Icon size={20} />
                 </div>
                 <h3 className="font-semibold text-slate-900 mb-1.5">
@@ -125,7 +125,7 @@ export default function TrasladoDetailSections({ traslado }: Props) {
             <li key={item} className="flex gap-3 items-start">
               <CheckCircle2
                 size={18}
-                className="text-teal-400 shrink-0 mt-0.5"
+                className="text-accent-500 shrink-0 mt-0.5"
               />
               <span className="text-white/85 text-sm sm:text-base leading-relaxed">
                 {item}
@@ -175,12 +175,12 @@ export default function TrasladoDetailSections({ traslado }: Props) {
                 <div className="p-5">
                   {!v.imagen && (
                     <div className="flex items-center gap-2 mb-2">
-                      <Icon size={18} className="text-teal-700" />
+                      <Icon size={18} className="text-primary-700" />
                       <h3 className="font-bold text-slate-900">{v.nombre}</h3>
                     </div>
                   )}
                   {v.capacidad && (
-                    <p className="text-xs font-semibold uppercase tracking-wide text-teal-700 mb-2">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-primary-700 mb-2">
                       {v.capacidad}
                     </p>
                   )}
@@ -200,10 +200,10 @@ export default function TrasladoDetailSections({ traslado }: Props) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.45 }}
-        className="rounded-3xl border border-teal-100 bg-gradient-to-br from-teal-50/80 via-white to-slate-50 px-6 py-10 sm:px-10 sm:py-12"
+        className="rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50/80 via-white to-slate-50 px-6 py-10 sm:px-10 sm:py-12"
       >
         <div className="flex items-center gap-2 mb-3">
-          <Heart size={18} className="text-teal-700" />
+          <Heart size={18} className="text-primary-700" />
           <SectionLabel className="mb-0">Eventos especiales</SectionLabel>
         </div>
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-4">
@@ -246,7 +246,7 @@ export default function TrasladoDetailSections({ traslado }: Props) {
               <div className="shrink-0 text-left sm:text-right">
                 {p.desde_usd != null ? (
                   <>
-                    <p className="text-xl font-bold text-teal-700 tabular-nums">
+                    <p className="text-xl font-bold text-gold-600 tabular-nums">
                       desde ${p.desde_usd} USD
                     </p>
                     {p.desde_mxn != null && (
@@ -278,11 +278,11 @@ export default function TrasladoDetailSections({ traslado }: Props) {
           className="pointer-events-none absolute inset-0 opacity-40"
           aria-hidden
         >
-          <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-teal-600/25 blur-3xl" />
+          <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-primary-600/25 blur-3xl" />
           <div className="absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
         </div>
         <div className="relative z-10 max-w-xl mx-auto">
-          <p className="text-xs font-semibold tracking-[2px] uppercase text-teal-300/90 mb-3">
+          <p className="text-xs font-semibold tracking-[2px] uppercase text-primary-300/90 mb-3">
             Reserva sin complicaciones
           </p>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-4">
@@ -322,7 +322,7 @@ function SectionLabel({
   return (
     <span
       className={`inline-block text-xs font-semibold tracking-[2.5px] uppercase mb-3 ${
-        light ? "text-teal-300/90" : "text-teal-700"
+        light ? "text-primary-300/90" : "text-primary-700"
       } ${className}`}
     >
       {children}

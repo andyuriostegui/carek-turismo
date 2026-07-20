@@ -4,6 +4,7 @@
  */
 
 import { CAREK_WHATSAPP } from "@/lib/contact";
+import { getPrimaryImage, normalizeImagenes } from "@/lib/images";
 
 export { CAREK_WHATSAPP };
 
@@ -15,7 +16,10 @@ export type Tour = {
   destino_id?: string | null;
   descripcion_corta?: string | null;
   descripcion_larga?: string | null;
+  /** Legacy: primera imagen (espejo de imagenes[0]). */
   imagen_url?: string | null;
+  /** Galería de URLs públicas (orden = principal primero). */
+  imagenes?: string[] | null;
   precio_adulto_mxn?: number | null;
   precio_adulto_usd?: number | null;
   precio_menor_mxn?: number | null;
@@ -78,11 +82,24 @@ export function getDestinoImage(
   return DEFAULT_TOUR_IMAGE;
 }
 
+/** Galería completa del tour (con fallback de destino si no hay fotos). */
+export function getTourImages(
+  tour: Pick<Tour, "imagenes" | "imagen_url" | "slug" | "destinos">,
+  destinoSlug?: string | null,
+): string[] {
+  const gallery = normalizeImagenes(tour.imagenes, tour.imagen_url);
+  if (gallery.length > 0) return gallery;
+  const slug = destinoSlug || tour.destinos?.slug || null;
+  return [getDestinoImage(slug)];
+}
+
+/** Imagen principal del tour (primera de la galería o fallback). */
 export function getTourImage(
-  tour: Pick<Tour, "imagen_url" | "slug" | "destinos">,
+  tour: Pick<Tour, "imagenes" | "imagen_url" | "slug" | "destinos">,
   destinoSlug?: string | null,
 ): string {
-  if (tour.imagen_url) return tour.imagen_url;
+  const primary = getPrimaryImage(tour.imagenes, tour.imagen_url);
+  if (primary) return primary;
   const slug = destinoSlug || tour.destinos?.slug || null;
   return getDestinoImage(slug);
 }

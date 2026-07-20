@@ -9,12 +9,13 @@ import {
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import {
-  getTrasladoImage,
+  getTrasladoImages,
   whatsappTrasladoUrl,
   type Traslado,
 } from "@/lib/traslados";
 import TrasladoDetailSections from "@/components/traslados/TrasladoDetailSections";
 import WhatsAppFloat from "@/components/traslados/WhatsAppFloat";
+import DetailHeroGallery from "@/components/DetailHeroGallery";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -63,22 +64,18 @@ export default async function TrasladoDetallePage({ params }: PageProps) {
     notFound();
   }
 
-  const image = getTrasladoImage(traslado);
+  const photos = getTrasladoImages(traslado);
   const wa = whatsappTrasladoUrl(traslado.titulo, traslado.zona);
 
   return (
     <main className="bg-white min-h-screen">
       {/* ========== HERO ========== */}
-      <section className="relative h-[58vh] min-h-[400px] max-h-[640px] flex items-end overflow-hidden">
-        <img
-          src={image}
-          alt={traslado.titulo}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-900/25" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-black/20" />
-
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 pb-10 sm:pb-14 pt-28">
+      <DetailHeroGallery
+        images={photos}
+        alt={traslado.titulo}
+        className="h-[58vh] min-h-[400px] max-h-[640px]"
+      >
+        <div className="w-full max-w-7xl mx-auto px-6 pb-10 sm:pb-14 pt-28">
           <Link
             href="/traslados"
             className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors mb-5"
@@ -90,14 +87,19 @@ export default async function TrasladoDetallePage({ params }: PageProps) {
           <div className="flex flex-wrap items-center gap-2 mb-4">
             {traslado.zona && (
               <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold px-3 py-1.5">
-                <MapPin size={12} className="text-teal-300" />
+                <MapPin size={12} className="text-primary-300" />
                 {traslado.zona}
               </span>
             )}
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-600/90 text-white text-xs font-semibold px-3 py-1.5">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-600/90 text-white text-xs font-semibold px-3 py-1.5">
               <Car size={12} />
               Traslado privado
             </span>
+            {photos.length > 1 && (
+              <span className="inline-flex items-center rounded-full bg-black/40 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-sm">
+                {photos.length} fotos
+              </span>
+            )}
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight max-w-3xl mb-4">
@@ -118,7 +120,7 @@ export default async function TrasladoDetallePage({ params }: PageProps) {
                 </p>
                 <p className="text-2xl sm:text-3xl font-bold text-white tabular-nums">
                   ${traslado.precio_desde_usd}{" "}
-                  <span className="text-base font-semibold text-teal-300">
+                  <span className="text-base font-semibold text-gold-400">
                     USD
                   </span>
                 </p>
@@ -141,7 +143,7 @@ export default async function TrasladoDetallePage({ params }: PageProps) {
             </a>
           </div>
         </div>
-      </section>
+      </DetailHeroGallery>
 
       {/* ========== CONTENIDO ========== */}
       <section className="py-14 sm:py-16 lg:py-20">
@@ -155,7 +157,7 @@ export default async function TrasladoDetallePage({ params }: PageProps) {
         <div className="max-w-7xl mx-auto px-6">
           <Link
             href="/traslados"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-teal-800 hover:text-teal-600 transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-primary-800 hover:text-primary-600 transition-colors"
           >
             <ArrowLeft size={16} />
             Ver todos los traslados

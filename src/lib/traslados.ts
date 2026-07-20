@@ -4,6 +4,7 @@
  */
 
 import { CAREK_WHATSAPP } from "@/lib/contact";
+import { getPrimaryImage, normalizeImagenes } from "@/lib/images";
 
 export { CAREK_WHATSAPP };
 
@@ -34,7 +35,10 @@ export type Traslado = {
   titulo: string;
   descripcion: string | null;
   descripcion_larga?: string | null;
+  /** Legacy: primera imagen (espejo de imagenes[0]). */
   imagen_url?: string | null;
+  /** Galería de URLs públicas (orden = principal primero). */
+  imagenes?: string[] | null;
   precio_desde_usd?: number | null;
   precio_desde_mxn?: number | null;
   incluye?: string[] | null;
@@ -150,9 +154,9 @@ const FALLBACK_IMAGES: Record<string, string> = {
     "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=80",
 };
 
-export function getTrasladoImage(traslado: Pick<Traslado, "slug" | "zona" | "imagen_url">): string {
-  if (traslado.imagen_url) return traslado.imagen_url;
-
+function getTrasladoFallback(
+  traslado: Pick<Traslado, "slug" | "zona">,
+): string {
   const slug = (traslado.slug || "").toLowerCase();
   const zona = (traslado.zona || "").toLowerCase();
 
@@ -165,7 +169,12 @@ export function getTrasladoImage(traslado: Pick<Traslado, "slug" | "zona" | "ima
   if (slug.includes("holbox") || zona.includes("holbox")) {
     return FALLBACK_IMAGES.holbox;
   }
-  if (slug.includes("merida") || slug.includes("mérida") || zona.includes("mérida") || zona.includes("merida")) {
+  if (
+    slug.includes("merida") ||
+    slug.includes("mérida") ||
+    zona.includes("mérida") ||
+    zona.includes("merida")
+  ) {
     return FALLBACK_IMAGES.merida;
   }
   if (slug.includes("chetumal") || zona.includes("chetumal")) {
@@ -173,6 +182,24 @@ export function getTrasladoImage(traslado: Pick<Traslado, "slug" | "zona" | "ima
   }
 
   return FALLBACK_IMAGES.default;
+}
+
+/** Galería del traslado (imagenes / imagen_url, con fallback por zona). */
+export function getTrasladoImages(
+  traslado: Pick<Traslado, "slug" | "zona" | "imagen_url" | "imagenes">,
+): string[] {
+  const gallery = normalizeImagenes(traslado.imagenes, traslado.imagen_url);
+  if (gallery.length > 0) return gallery;
+  return [getTrasladoFallback(traslado)];
+}
+
+/** Imagen principal del traslado (primera de la galería o fallback). */
+export function getTrasladoImage(
+  traslado: Pick<Traslado, "slug" | "zona" | "imagen_url" | "imagenes">,
+): string {
+  const primary = getPrimaryImage(traslado.imagenes, traslado.imagen_url);
+  if (primary) return primary;
+  return getTrasladoFallback(traslado);
 }
 
 export function getIncluye(traslado: Traslado): string[] {

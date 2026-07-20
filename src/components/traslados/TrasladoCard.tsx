@@ -49,7 +49,7 @@ export default function TrasladoCard({
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/65 via-slate-900/15 to-transparent" />
 
           <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-slate-900 shadow-sm backdrop-blur-sm">
-            <Car size={13} className="text-teal-700" />
+            <Car size={13} className="text-primary-700" />
             Traslado privado
           </span>
 
@@ -60,14 +60,14 @@ export default function TrasladoCard({
 
           {traslado.zona && (
             <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-slate-900/80 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
-              <MapPin size={12} className="text-teal-300" />
+              <MapPin size={12} className="text-primary-300" />
               {traslado.zona}
             </span>
           )}
         </button>
 
         <div className="flex flex-1 flex-col p-5 sm:p-6">
-          <h2 className="mb-2 text-lg font-bold tracking-tight text-slate-900 transition-colors group-hover:text-teal-800 sm:text-xl">
+          <h2 className="mb-2 text-lg font-bold tracking-tight text-slate-900 transition-colors group-hover:text-primary-800 sm:text-xl">
             {traslado.titulo}
           </h2>
 
@@ -83,9 +83,9 @@ export default function TrasladoCard({
                 <p className="text-[11px] font-medium uppercase tracking-wide text-slate-400">
                   Desde
                 </p>
-                <p className="text-2xl font-bold tabular-nums text-teal-700">
+                <p className="text-2xl font-bold tabular-nums text-gold-600">
                   ${traslado.precio_desde_usd}
-                  <span className="ml-1 text-sm font-semibold text-teal-600/80">
+                  <span className="ml-1 text-sm font-semibold text-gold-500/90">
                     USD
                   </span>
                 </p>
@@ -100,7 +100,7 @@ export default function TrasladoCard({
           <button
             type="button"
             onClick={handleOpen}
-            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-teal-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2"
+            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
           >
             Ver detalles
             <Eye size={16} className="shrink-0 opacity-80" />

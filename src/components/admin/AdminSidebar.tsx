@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -65,11 +66,17 @@ export default function AdminSidebar({ open, onClose }: AdminSidebarProps) {
       >
         <div className="flex h-16 items-center justify-between border-b border-slate-800 px-5">
           <Link href="/admin" className="flex items-center gap-2" onClick={onClose}>
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-500 text-sm font-bold text-white">
-              C
+            <span className="relative flex h-9 w-9 items-center justify-center overflow-hidden">
+              <Image
+                src="/logo.png"
+                alt="Carek CRT"
+                width={36}
+                height={36}
+                className="h-9 w-9 object-contain"
+              />
             </span>
             <div className="leading-tight">
-              <p className="text-sm font-semibold tracking-wide">CAREK</p>
+              <p className="text-sm font-semibold tracking-wide">Carek CRT</p>
               <p className="text-[11px] text-slate-400">Panel Admin</p>
             </div>
           </Link>

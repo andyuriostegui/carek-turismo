@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import type { ReactNode } from "react";
@@ -97,9 +98,22 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Marca */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="inline-block text-2xl font-bold text-white tracking-wide mb-4">
-              CAREK
+            <Link
+              href="/"
+              className="inline-flex items-center mb-4"
+              aria-label="Carek CRT — Inicio"
+            >
+              <Image
+                src="/logo.png"
+                alt="Carek CRT Operador Turístico"
+                width={140}
+                height={112}
+                className="h-12 w-auto object-contain"
+              />
             </Link>
+            <p className="text-primary-300/90 text-sm font-medium tracking-wide mb-2">
+              La diferencia de Viajar con sentido
+            </p>
             <p className="text-sm text-slate-400 leading-relaxed mb-5 max-w-xs">
               Tours, circuitos y traslados para que viajes sin complicaciones. Experiencias locales con atención cercana.
             </p>

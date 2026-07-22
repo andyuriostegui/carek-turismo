@@ -20,8 +20,8 @@ const reviews = [
     color: "bg-rose-500",
     rating: 5,
     time: "hace 2 semanas",
-    tour: "Punta Cana Full Day",
-    text: "Excelente organización de principio a fin. El guía super atento y los tiempos perfectos. Vale cada peso. Ya estamos pensando el próximo tour con CAREK.",
+    tour: "Tour Bacalar y Cenote",
+    text: "Excelente organización de principio a fin. El guía super atento y los tiempos perfectos en la Laguna de Bacalar. Vale cada peso. Ya estamos pensando el próximo tour con CAREK.",
   },
   {
     name: "Carlos R.",
@@ -29,8 +29,8 @@ const reviews = [
     color: "bg-primary-700",
     rating: 5,
     time: "hace 1 mes",
-    tour: "Circuito Samaná",
-    text: "El circuito de Samaná fue increíble. Hotel cómodo, transporte puntual y sin sorpresas en el precio. Se nota que saben lo que hacen.",
+    tour: "Viajes a Chiapas",
+    text: "El circuito por Chiapas fue increíble: Palenque, cascadas y San Cristóbal. Hotel cómodo, transporte puntual y sin sorpresas en el precio. Se nota que saben lo que hacen.",
   },
   {
     name: "Laura M.",
@@ -38,8 +38,8 @@ const reviews = [
     color: "bg-accent-600",
     rating: 5,
     time: "hace 3 semanas",
-    tour: "Traslado VIP",
-    text: "Llegamos de madrugada y el conductor ya estaba esperándonos. Aire acondicionado, agua y muy amable. Para traslados no dudo en volver a llamarles.",
+    tour: "Traslado Cancún y Riviera Maya",
+    text: "Llegamos de madrugada al aeropuerto de Cancún y el conductor ya estaba esperándonos. Aire acondicionado, agua y muy amable. Para traslados no dudo en volver a llamarles.",
   },
   {
     name: "Andrés P.",
@@ -47,8 +47,8 @@ const reviews = [
     color: "bg-violet-600",
     rating: 5,
     time: "hace 5 días",
-    tour: "Tour familiar",
-    text: "Viajamos en familia con niños y todo salió redondo. Flexibles con los horarios y muy claros en la cotización. Recomendadísimos.",
+    tour: "Tour Chichén Itzá Todo Incluido",
+    text: "Viajamos en familia con niños a Chichén Itzá y todo salió redondo. El cenote y Valladolid fueron un plus. Flexibles con los horarios y muy claros en la cotización. Recomendadísimos.",
   },
   {
     name: "Sofía L.",
@@ -56,8 +56,8 @@ const reviews = [
     color: "bg-gold-500",
     rating: 4,
     time: "hace 2 meses",
-    tour: "Punta Cana Full Day",
-    text: "Muy buena experiencia. El snorkel estuvo genial. Solo un pequeño retraso en la salida, pero lo compensaron con buena atención. Volvería a reservar.",
+    tour: "Tour Catamarán y Snorkel Cozumel",
+    text: "Muy buena experiencia en Cozumel. El snorkel en el arrecife estuvo genial. Solo un pequeño retraso en la salida, pero lo compensaron con buena atención. Volvería a reservar.",
   },
   {
     name: "Diego H.",
@@ -65,8 +65,8 @@ const reviews = [
     color: "bg-primary-600",
     rating: 5,
     time: "hace 1 semana",
-    tour: "Grupo empresa",
-    text: "Organizaron un day trip para 18 personas del trabajo. Coordinación impecable y precios competitivos. Profesionales de verdad.",
+    tour: "Tour Xcaret Plus",
+    text: "Organizaron un day trip a Xcaret para 18 personas del trabajo. Coordinación impecable y precios competitivos. Profesionales de verdad.",
   },
 ];
 

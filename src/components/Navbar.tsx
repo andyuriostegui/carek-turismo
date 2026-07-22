@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
@@ -17,10 +18,21 @@ export default function Navbar() {
 
   return (
     <header className="absolute top-0 left-0 w-full z-50">
-      <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="text-2xl font-bold text-white tracking-wide">
-          CAREK
+        <Link
+          href="/"
+          className="relative flex items-center shrink-0"
+          aria-label="Carek CRT — Inicio"
+        >
+          <Image
+            src="/logo.png"
+            alt="Carek CRT Operador Turístico"
+            width={160}
+            height={128}
+            className="h-11 w-auto object-contain sm:h-12 drop-shadow-md"
+            priority
+          />
         </Link>
 
         {/* Desktop Menu */}

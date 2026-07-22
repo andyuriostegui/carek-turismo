@@ -54,15 +54,19 @@ export default function Hero() {
       {/* Contenido */}
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 pt-24 pb-16 text-center">
         
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 text-white/90 text-sm font-medium tracking-wide mb-5"
+          className="mb-5 flex items-center justify-center gap-3"
         >
-          <MapPin size={16} className="text-primary-300" />
-          Explora destinos únicos con CAREK
-        </motion.p>
+          <span className="hidden sm:block h-px w-10 bg-gradient-to-r from-transparent to-primary-300/70" aria-hidden />
+          <p className="inline-flex items-center gap-2 text-primary-200 text-sm sm:text-[0.95rem] font-medium tracking-[0.12em]">
+            <MapPin size={15} className="text-primary-300 shrink-0" />
+            La diferencia de Viajar con sentido
+          </p>
+          <span className="hidden sm:block h-px w-10 bg-gradient-to-l from-transparent to-primary-300/70" aria-hidden />
+        </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 30 }}

@@ -13,10 +13,62 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://carek-turismo.vercel.app";
+
+const siteTitle = "Carek CRT | Operador Turístico — Tours, Circuitos y Traslados";
+const siteDescription =
+  "Operador turístico en la Península de Yucatán y el Caribe mexicano. Tours, circuitos y traslados privados con atención cercana. Cotiza tu próxima aventura con Carek CRT.";
+
 export const metadata: Metadata = {
-  title: "CAREK Turismo | Tours, Circuitos y Traslados",
-  description:
-    "Descubre tours, circuitos y traslados con CAREK. Encuentra tu próxima aventura y viaja sin preocupaciones.",
+  metadataBase: new URL(siteUrl),
+  title: siteTitle,
+  description: siteDescription,
+  keywords: [
+    "Carek",
+    "Carek CRT",
+    "operador turístico",
+    "tours Cancún",
+    "tours Yucatán",
+    "circuitos México",
+    "traslados privados",
+    "Chichén Itzá",
+    "Cozumel",
+    "Mérida",
+  ],
+  authors: [{ name: "Carek CRT" }],
+  creator: "Carek CRT",
+  icons: {
+    icon: [{ url: "/logo.png", type: "image/png" }],
+    apple: [{ url: "/logo.png", type: "image/png" }],
+    shortcut: "/logo.png",
+  },
+  openGraph: {
+    type: "website",
+    locale: "es_MX",
+    url: "/",
+    siteName: "Carek CRT — Operador Turístico",
+    title: siteTitle,
+    description: siteDescription,
+    images: [
+      {
+        url: "/logo.png",
+        width: 2500,
+        height: 2000,
+        alt: "Carek CRT Operador Turístico — logo oficial",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
+    images: ["/logo.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

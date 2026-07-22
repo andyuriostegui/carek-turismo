@@ -106,9 +106,9 @@ export default function Footer() {
               <Image
                 src="/logo.png"
                 alt="Carek CRT Operador Turístico"
-                width={140}
-                height={112}
-                className="h-12 w-auto object-contain"
+                width={220}
+                height={176}
+                className="h-16 w-auto object-contain sm:h-20"
               />
             </Link>
             <p className="text-primary-300/90 text-sm font-medium tracking-wide mb-2">

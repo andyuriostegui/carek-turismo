@@ -66,13 +66,13 @@ export default function AdminSidebar({ open, onClose }: AdminSidebarProps) {
       >
         <div className="flex h-16 items-center justify-between border-b border-slate-800 px-5">
           <Link href="/admin" className="flex items-center gap-2" onClick={onClose}>
-            <span className="relative flex h-9 w-9 items-center justify-center overflow-hidden">
+            <span className="relative flex h-11 w-14 shrink-0 items-center justify-center overflow-hidden">
               <Image
                 src="/logo.png"
                 alt="Carek CRT"
-                width={36}
-                height={36}
-                className="h-9 w-9 object-contain"
+                width={56}
+                height={44}
+                className="h-11 w-auto object-contain"
               />
             </span>
             <div className="leading-tight">

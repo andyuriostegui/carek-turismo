@@ -28,9 +28,9 @@ export default function Navbar() {
           <Image
             src="/logo.png"
             alt="Carek CRT Operador Turístico"
-            width={160}
-            height={128}
-            className="h-11 w-auto object-contain sm:h-12 drop-shadow-md"
+            width={280}
+            height={224}
+            className="h-16 w-auto object-contain sm:h-20 md:h-24 drop-shadow-md"
             priority
           />
         </Link>
